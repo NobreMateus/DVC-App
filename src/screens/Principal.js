@@ -17,7 +17,6 @@ export default class Principal extends React.Component {
   render() {
     return (
       <Container style={styles.container}>
-        {/* <Header hasTabs /> */}
         <Tabs>
           <Tab heading={<TabHeading><Text>Desafios</Text></TabHeading>}>
             <Challenges cristhian={this.state['cristhian']} nCristhian={this.state['nCristhian']}  />
@@ -26,7 +25,7 @@ export default class Principal extends React.Component {
             <DVCForm changeNames={this.changeName.bind(this)} />
           </Tab>
           <Tab heading={<TabHeading><Text>Informações</Text></TabHeading>}>
-            <Text>Tab 3</Text>
+            <Text>Informações da CRU</Text>
           </Tab>
         </Tabs>
       </Container>
@@ -34,7 +33,6 @@ export default class Principal extends React.Component {
   }
   
   changeName(state) {
-    console.log(state)
     this.setState(
       {
         cristhian: [state.cristhian['c1'], state.cristhian['c2'], state.cristhian['c3'], state.cristhian['c4'], state.cristhian['c5']],

@@ -8,7 +8,6 @@ export default class DVCForm extends React.Component {
         super(props);
         this.state={
             editMode:true,
-
             name: "",
             phone: "",
             university:"",
@@ -39,7 +38,7 @@ export default class DVCForm extends React.Component {
                 <Content>
                     <Form style={{ ...styles.form, marginTop: 15 }}>
                         {this.state['editMode']?null:
-                            <Button light style={styles.button}><Text style={{...styles.textButton, color:"#a8c5c8"}} onPress={()=>this.setState({editMode: true })}> Editar </Text></Button>}
+                            <Button light onPress={()=>this.enableEditForm()} style={styles.button}><Text style={{...styles.textButton, color:"#a8c5c8"}} > Editar </Text></Button>}
                         <View style={styles.input} >
                             <Label>Nome</Label>
                             <Input style={styles.textInput} value={this.state['name']} onChangeText={t => this.setState({ name:t })} disabled={!this.state['editMode']} />
@@ -70,44 +69,57 @@ export default class DVCForm extends React.Component {
                             <Textarea rowSpan={5} bordered style={styles.textInput} value={this.state['order']} onChangeText={t => this.setState({ order:t })} disabled={!this.state['editMode']}/>
                         </View>
                         <View style={styles.input} >
-                            <Label>Liste 5 cristãos para fazerem o DVC:</Label>
-                            <Item regular>
+                            <Label style={styles.input}>Liste 5 cristãos para fazerem o DVC:</Label>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['cristhian']['c1']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: t }})} disabled={!this.state['editMode']}/>
-                            </Item>
-                            <Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['cristhian']['c2']} onChangeText={t => this.setState({ cristhian:{ ...this.state['cristhian'], c2: t } })} disabled={!this.state['editMode']}/>
-                            </Item>
-                            <Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['cristhian']['c3']} onChangeText={t => this.setState({ cristhian:{ ...this.state['cristhian'], c3: t } })} disabled={!this.state['editMode']}/>
-                            </Item>
-                            <Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['cristhian']['c4']} onChangeText={t => this.setState({ cristhian:{ ...this.state['cristhian'], c4: t } })} disabled={!this.state['editMode']}/>
-                            </Item>
-                            <Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['cristhian']['c5']} onChangeText={t => this.setState({ cristhian:{ ...this.state['cristhian'], c5: t } })} disabled={!this.state['editMode']}/>
-                            </Item>
+                            </View>
                         </View>
                         <View style={styles.input} >
-                            <Label>Liste 5 não cristãos para evangelizar:</Label>
-                            <Item regular>
+                            <Label style={styles.input}>Liste 5 não cristãos para evangelizar:</Label>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['ncristhian']['c1']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c1: t }})} disabled={!this.state['editMode']}  />
-                            </Item><Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['ncristhian']['c2']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c2: t }})} disabled={!this.state['editMode']}/>
-                            </Item><Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['ncristhian']['c3']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c3: t }})} disabled={!this.state['editMode']}/>
-                            </Item><Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['ncristhian']['c4']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c4: t }})} disabled={!this.state['editMode']}/>
-                            </Item><Item regular>
+                            </View>
+                            <View style={styles.input}>
                                 <Input style={styles.textInput} value={this.state['ncristhian']['c5']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c5: t }})} disabled={!this.state['editMode']}/>
-                            </Item>
+                            </View>
                         </View>
                         {this.state['editMode']?
-                            <Button primary style={{...styles.textButton, color:"#f8a26c"}}><Text style={styles.textButton} onPress={()=>{this.setState({editMode: false }); this.props.changeNames(this.state) }}> Salvar </Text></Button>
+                            <Button primary onPress={()=>{this.saveData()}} style={{...styles.button, color:"#f8a26c"}}><Text style={styles.textButton} > Salvar </Text></Button>
                             :null}
                     </Form>
                 </Content>
             </Container>
         );
+    }
+
+    saveData(){
+        this.setState({editMode: false }); 
+        this.props.changeNames(this.state);  
+    }
+
+    enableEditForm(){
+        this.setState({editMode: true });
     }
 }
 
