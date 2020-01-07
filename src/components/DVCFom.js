@@ -51,44 +51,44 @@ export default class DVCForm extends React.Component {
                             <Button light onPress={() => this.enableEditForm()} style={styles.button}><Text style={{ ...styles.textButton, color: "#a8c5c8" }} > Editar </Text></Button>}
 
                         <View style={styles.input} >
-                            <Label>Nome</Label>
+                            <Label style={styles.labelStyle}>Nome</Label>
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['name']} onChangeText={t => this.setState({ name: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label>Telefone</Label>
+                            <Label style={styles.labelStyle}>Telefone</Label>
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['phone']} onChangeText={t => this.setState({ phone: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label>Universidade</Label>
+                            <Label style={styles.labelStyle}>Universidade</Label>
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['university']} onChangeText={t => this.setState({ university: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label>Qual é a sua visão?</Label>
+                            <Label style={styles.labelStyle}>Qual é a sua visão?</Label>
                             <Textarea onFocus={(event) => {
                                 this._scrollToInput(event.target)
-                            }} rowSpan={5} bordered style={styles.textInput} value={this.state['vision']} onChangeText={t => this.setState({ vision: t })} disabled={!this.state['editMode']} />
+                            }} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['vision']} onChangeText={t => this.setState({ vision: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label>Qual a mudança você deseja ver no seu Campus?</Label>
-                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.textInput} value={this.state['change']} onChangeText={t => this.setState({ change: t })} disabled={!this.state['editMode']} />
+                            <Label style={styles.labelStyle}>Qual a mudança você deseja ver no seu Campus?</Label>
+                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['change']} onChangeText={t => this.setState({ change: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label>Leia Mateus 28.18-20. O que Jesus promete?</Label>
-                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.textInput} value={this.state['promise']} onChangeText={t => this.setState({ promise: t })} disabled={!this.state['editMode']} />
+                            <Label style={styles.labelStyle}>Leia Mateus 28.18-20. O que Jesus promete?</Label>
+                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['promise']} onChangeText={t => this.setState({ promise: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label>Leia 2 Timóteo 2.2. O que Paulo está dizendo?</Label>
-                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.textInput} value={this.state['order']} onChangeText={t => this.setState({ order: t })} disabled={!this.state['editMode']} />
+                            <Label style={styles.labelStyle}>Leia 2 Timóteo 2.2. O que Paulo está dizendo?</Label>
+                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['order']} onChangeText={t => this.setState({ order: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.input}>Liste 5 cristãos para fazerem o DVC:</Label>
+                            <Label style={{...styles.labelStyle, ...styles.input}}>Liste 5 cristãos para fazerem o DVC:</Label>
                             <View style={styles.input}>
                                 <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c1']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: t } })} disabled={!this.state['editMode']} />
                             </View>
@@ -107,7 +107,7 @@ export default class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.input}>Liste 5 não cristãos para evangelizar:</Label>
+                            <Label style={{...styles.labelStyle, ...styles.input}}>Liste 5 não cristãos para evangelizar:</Label>
                             <View style={styles.input}>
                                 <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c1']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c1: t } })} disabled={!this.state['editMode']} />
                             </View>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // paddingHorizontal: '5%',
-        backgroundColor: '#E5E5E5',
+        backgroundColor: '#a8c5c8',
     },
 
     form: {
@@ -166,17 +166,39 @@ const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: "#fff",
-        borderRadius: 8
+        borderRadius: 25,
+        paddingLeft: 20,
+        paddingRight: 20,
+        fontSize: 16
     },
+
+    bigTextInput: {
+        backgroundColor: "#fff",
+        borderRadius: 25,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        fontSize: 16
+    },
+
     textButton: {
         color: "#fff",
-        fontSize: 24
+        fontSize: 20
     },
+    
+    labelStyle:{
+        color:"#4f4f4f",
+        marginBottom:5
+    },
+
     button: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 25,
-        borderRadius: 8
+        borderRadius: 25,
+        marginHorizontal: 35,
+        height: 45,
+        backgroundColor: "#ff8745"
     }
 });

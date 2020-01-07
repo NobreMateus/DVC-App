@@ -6,15 +6,23 @@ export const AppNavigator = createStackNavigator(
   {
     Login: {
       screen: Login,
-      screenOptions:{
+      navigationOptions:{
         headerShown: false,
-      }
+      },
+      
     },
     Principal: {
       screen: Principal,
-      screenOptions:{
-        headerShown: false,
-      }
+      navigationOptions:{
+        headerShown: true,
+        headerTitleStyle:{
+          color:"#fff",
+        },
+        headerStyle:{
+          backgroundColor: '#ff8745',
+          elevation: 0,
+        }
+      },
     },
   }, 
 
