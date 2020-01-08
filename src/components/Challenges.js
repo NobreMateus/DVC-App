@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { Container, Header, Content, ListItem, CheckBox, Text, Body } from 'native-base';
+import ChallengeCard from './ChallengeCard';
 
 export default class Challenges extends React.Component {
 
@@ -31,31 +32,31 @@ export default class Challenges extends React.Component {
         <Content >
           <View style={styles.checks}>
             <View style={styles.menu}>
-              <Text>Falar de Cristo para 5 não Cristãos</Text>
-              <Text>{this.ncCount}/5</Text>
+              <Text style={styles.principalText}>
+                Falar de Cristo para 5 não Cristãos
+              </Text>
+              <Text style={styles.pointsText}>
+                {this.ncCount}/5
+              </Text>
             </View>
             {this.props.nCristhian.map((nC, n) => {
               return (
-                <ListItem key={n} onPress={check => { this.setState({ ['nc' + (n + 1)]: !this.state['nc' + (n + 1)] }); this.state['nc' + (n + 1)] ? this.ncCount-- : this.ncCount++ }}>
-                  <CheckBox checked={this.state['nc' + (n + 1)]} />
-                  <Body>
-                    <Text>{nC}</Text>
-                  </Body>
-                </ListItem>
+                <TouchableHighlight key={n} style= {{marginBottom:5}}
+                  onPress={check => { this.setState({ ['nc' + (n + 1)]: !this.state['nc' + (n + 1)] }); this.state['nc' + (n + 1)] ? this.ncCount-- : this.ncCount++ }}>
+                  <ChallengeCard text={nC} checked={this.state['nc' + (n + 1)]}/>
+                </TouchableHighlight>
               )
             })}
             <View style={styles.menu}>
-              <Text>Desafiar 5 Cristãos a fazer o mesmo</Text>
-              <Text>{this.cCount}/5</Text>
+              <Text style={styles.principalText}>Desafiar 5 Cristãos a fazer o mesmo</Text>
+              <Text style={styles.pointsText}>{this.cCount}/5</Text>
             </View>
             {this.props.cristhian.map((c, n) => {
               return (
-                <ListItem key={n} onPress={check => { this.setState({ ['c' + (n + 1)]: !this.state['c' + (n + 1)] }); this.state['c' + (n + 1)] ? this.cCount-- : this.cCount++ }} >
-                  <CheckBox checked={this.state['c' + (n + 1)]} />
-                  <Body>
-                    <Text>{c}</Text>
-                  </Body>
-                </ListItem>
+                <TouchableHighlight underlayColor="white" key={n} style= {{marginBottom:5}}
+                  onPress={check => { this.setState({ ['c' + (n + 1)]: !this.state['c' + (n + 1)] }); this.state['c' + (n + 1)] ? this.cCount-- : this.cCount++ }}>
+                  <ChallengeCard text={c} checked={this.state['c' + (n + 1)]}/>
+                </TouchableHighlight>
               )
             })}
           </View>
@@ -68,7 +69,7 @@ export default class Challenges extends React.Component {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    // backgroundColor: '#fff',
+    backgroundColor: '#a8c5c8',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
@@ -79,6 +80,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15
+    marginTop: 15,
+    marginBottom: 10,
+    alignItems:"flex-end"
+  }, 
+  principalText:{
+    color:"#4f4f4f",
+    fontSize:16,
+    marginBottom:4
+  },
+  pointsText:{
+    color:"#527376",
+    fontSize: 30,
+    fontWeight: 'bold',
   }
 });
