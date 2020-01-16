@@ -10,10 +10,10 @@ export default class ChallengeCard extends React.Component {
     render() {
         return (
           <View style={styles.container} >
-            <Text style={styles.text}>
-                {this.props.text}
-                {this.props.checked?"true":"false"}
-            </Text> 
+            <View style={styles.cardContainer}>
+                <Text style={styles.text}>{this.props.text}</Text> 
+                <View style ={ this.props.checked?styles.checked:styles.noChecked }></View>
+            </View> 
           </View>
         );
       }
@@ -21,7 +21,7 @@ export default class ChallengeCard extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex:1,
+      flex:1, 
       justifyContent :"center",
       paddingHorizontal: 15,  
       height: 55,
@@ -31,6 +31,27 @@ const styles = StyleSheet.create({
     },
     text: {
       fontSize: 16,
-      color:"#000"
+      color:"#000",
+      
+      
+    },
+    checked:{
+      height:25,
+      width:25,
+      borderRadius:13,
+      backgroundColor:"#d48472"
+    },
+    noChecked:{
+      height:25,
+      width:25,
+      borderRadius:13,
+      borderWidth: 2,
+      borderColor: "#d48472",
+
+    },
+    cardContainer:{
+      flexDirection: 'row',
+    justifyContent: 'space-between',  
     }
+
   });

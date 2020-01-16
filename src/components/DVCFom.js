@@ -35,7 +35,7 @@ export default class DVCForm extends React.Component {
 
     _scrollToInput(reactNode) {
         // Add a 'scroll' ref to your ScrollView
-        this.scroll.props.scrollToFocusedInput(reactNode, 140)
+        this.scroll.props.scrollToFocusedInput(reactNode, 220)
     }
 
     render() {
@@ -78,12 +78,15 @@ export default class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia Mateus 28.18-20. O que Jesus promete?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{color:"#ff8745"}}>Mateus 28.18-20</Text>. O que Jesus promete?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['promise']} onChangeText={t => this.setState({ promise: t })} disabled={!this.state['editMode']} />
+                            <Text ><Text style={{color:"#ff8745"}}>Ir</Text> - Ganhar</Text>
+                            <Text ><Text style={{color:"#ff8745"}}>Fazer discípulos</Text> - Edificar</Text>
+                            <Text ><Text style={{color:"#ff8745"}}>Todas as nações</Text> -  Enviar</Text>
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia 2 Timóteo 2.2. O que Paulo está dizendo?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{color:"#ff8745"}}>2 Timóteo 2.2</Text>. O que Paulo está dizendo?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['order']} onChangeText={t => this.setState({ order: t })} disabled={!this.state['editMode']} />
                         </View>
 

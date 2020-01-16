@@ -27,7 +27,7 @@ export const AppNavigator = createStackNavigator(
   }, 
 
   {
-      initialRouteName: 'Principal',
+      initialRouteName: 'Login',
   },
    
 );
