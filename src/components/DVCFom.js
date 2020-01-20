@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Textarea, Button } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as firebaseServices from '../services/firebaseServices'
 
 export default class DVCForm extends React.Component {
 
@@ -143,6 +144,7 @@ export default class DVCForm extends React.Component {
     saveData() {
         this.setState({ editMode: false });
         this.props.changeNames(this.state);
+        firebaseServices.addDVCForm("id", "name", "tel", "univers", "vision", "change", "promisse", "says", "cristaos", "nCristaos");
     }
 
     enableEditForm() {
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // paddingHorizontal: '5%',
-        backgroundColor: '#a8c5c8',
+        backgroundColor: '#a8c5c8', 
     },
 
     form: {

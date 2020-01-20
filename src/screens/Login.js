@@ -1,20 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Item, Input, Label, Button } from 'native-base';
+import * as firebase from 'firebase';
 
 export default class Login extends React.Component {
 
   render(){
+    
     return (
       <View style={styles.container}>
         <Image source={require('../../assets/fundo-login.png')} style={styles.backImage} ></Image>
         <View style={styles.loginArea} >
           {/* <Input placeholder="E-mail" style={styles.inputStyle} />
               <Input placeholder="Senha" style={styles.inputStyle} /> */}
-          <Button style={styles.buttonStyle} onPress={() => this.props.navigation.navigate('Principal')} ><Text style={{ color: "#fff" }}>ENTRAR</Text></Button>
+          <Button style={styles.buttonStyle} onPress={() => this.enterButtonFunction() } ><Text style={{ color: "#fff" }}>ENTRAR</Text></Button>
         </View>
       </View>
     )
+  }
+
+  enterButtonFunction(){
+    this.props.navigation.navigate('Principal');
   }
 }
 
