@@ -2,8 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Item, Input, Label, Button } from 'native-base';
 import * as firebase from 'firebase';
+import * as firebaseService from '../services/firebaseServices'
 
 export default class Login extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {
+      email: '',
+      senha: '',
+    }
+  }
 
   render(){
     
@@ -11,17 +20,28 @@ export default class Login extends React.Component {
       <View style={styles.container}>
         <Image source={require('../../assets/fundo-login.png')} style={styles.backImage} ></Image>
         <View style={styles.loginArea} >
-          {/* <Input placeholder="E-mail" style={styles.inputStyle} />
-              <Input placeholder="Senha" style={styles.inputStyle} /> */}
+          <Input value={this.state['email']} onChange={ev=> this.setState({email: ev.nativeEvent.text}) } placeholder="E-mail" style={styles.inputStyle} />
+          <Input value={this.state['senha']} onChange={ev=>this.setState({senha: ev.nativeEvent.text}) } placeholder="Senha" style={styles.inputStyle} />
           <Button style={styles.buttonStyle} onPress={() => this.enterButtonFunction() } ><Text style={{ color: "#fff" }}>ENTRAR</Text></Button>
         </View>
       </View>
     )
   }
 
-  enterButtonFunction(){
-    this.props.navigation.navigate('Principal');
+  async enterButtonFunction(){
+    try{
+      let credential = await firebase.auth().signInWithEmailAndPassword(this.state['email'], this.state['senha']);
+    }catch(e){
+      console.log(e);
+    }
+
+    if(firebase.auth().currentUser != null){
+      this.props.navigation.navigate('Principal');
+    }else{
+      console.log("Falha no Login!")
+    }
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -46,17 +66,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7
   },
   loginArea: {
-    height: 70,
+    marginTop:100,
+    height: 190,
     width: 250
   },
   buttonStyle: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 25,
     borderRadius: 25,
     marginHorizontal: 25,
-    height: 12,
+    // height: 12,
     backgroundColor: "#ff8745"
   }
 

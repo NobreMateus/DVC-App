@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Textarea, Button } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as firebase from 'firebase';
 import * as firebaseServices from '../services/firebaseServices'
 
 export default class DVCForm extends React.Component {
@@ -37,6 +38,37 @@ export default class DVCForm extends React.Component {
     _scrollToInput(reactNode) {
         // Add a 'scroll' ref to your ScrollView
         this.scroll.props.scrollToFocusedInput(reactNode, 220)
+    }
+
+    async componentWillMount() {
+        if (await firebaseServices.DVCIsReady()) {
+            let data = await firebaseServices.getDVCData();
+            this.setState({
+                name: data['name'],
+                phone: data['phone'],
+                university: data['university'],
+                vision: data['vision'],
+                change: data['change'],
+                promise: data['promise'],
+                order: data['order'],
+                cristhian: {
+                    c1: data['cristhian']['c1'],
+                    c2: data['cristhian']['c2'],
+                    c3: data['cristhian']['c3'],
+                    c4: data['cristhian']['c4'],
+                    c5: data['cristhian']['c5'],
+                },
+
+                ncristhian: {
+                    c1: data['ncristhian']['c1'],
+                    c2: data['ncristhian']['c2'],
+                    c3: data['ncristhian']['c3'],
+                    c4: data['ncristhian']['c4'],
+                    c5: data['ncristhian']['c5'],
+                },
+                editMode: false,
+            })
+        }
     }
 
     render() {
@@ -79,20 +111,20 @@ export default class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia <Text style={{color:"#ff8745"}}>Mateus 28.18-20</Text>. O que Jesus promete?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>Mateus 28.18-20</Text>. O que Jesus promete?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['promise']} onChangeText={t => this.setState({ promise: t })} disabled={!this.state['editMode']} />
-                            <Text ><Text style={{color:"#ff8745"}}>Ir</Text> - Ganhar</Text>
-                            <Text ><Text style={{color:"#ff8745"}}>Fazer discípulos</Text> - Edificar</Text>
-                            <Text ><Text style={{color:"#ff8745"}}>Todas as nações</Text> -  Enviar</Text>
+                            <Text ><Text style={{ color: "#ff8745" }}>Ir</Text> - Ganhar</Text>
+                            <Text ><Text style={{ color: "#ff8745" }}>Fazer discípulos</Text> - Edificar</Text>
+                            <Text ><Text style={{ color: "#ff8745" }}>Todas as nações</Text> -  Enviar</Text>
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia <Text style={{color:"#ff8745"}}>2 Timóteo 2.2</Text>. O que Paulo está dizendo?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>2 Timóteo 2.2</Text>. O que Paulo está dizendo?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['order']} onChangeText={t => this.setState({ order: t })} disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={{...styles.labelStyle, ...styles.input}}>Liste 5 cristãos para fazerem o DVC:</Label>
+                            <Label style={{ ...styles.labelStyle, ...styles.input }}>Liste 5 cristãos para fazerem o DVC:</Label>
                             <View style={styles.input}>
                                 <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c1']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: t } })} disabled={!this.state['editMode']} />
                             </View>
@@ -111,7 +143,7 @@ export default class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={{...styles.labelStyle, ...styles.input}}>Liste 5 não cristãos para evangelizar:</Label>
+                            <Label style={{ ...styles.labelStyle, ...styles.input }}>Liste 5 não cristãos para evangelizar:</Label>
                             <View style={styles.input}>
                                 <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c1']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c1: t } })} disabled={!this.state['editMode']} />
                             </View>
@@ -144,7 +176,7 @@ export default class DVCForm extends React.Component {
     saveData() {
         this.setState({ editMode: false });
         this.props.changeNames(this.state);
-        firebaseServices.addDVCForm("id", "name", "tel", "univers", "vision", "change", "promisse", "says", "cristaos", "nCristaos");
+        firebaseServices.addDVCForm(this.state);
     }
 
     enableEditForm() {
@@ -158,7 +190,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // paddingHorizontal: '5%',
-        backgroundColor: '#a8c5c8', 
+        backgroundColor: '#a8c5c8',
     },
 
     form: {
@@ -190,10 +222,10 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 20
     },
-    
-    labelStyle:{
-        color:"#4f4f4f",
-        marginBottom:5
+
+    labelStyle: {
+        color: "#4f4f4f",
+        marginBottom: 5
     },
 
     button: {
