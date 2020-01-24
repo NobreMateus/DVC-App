@@ -3,15 +3,86 @@ import { StyleSheet, View } from 'react-native';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
 import DVCForm from '../components/DVCFom';
 import Challenges from '../components/Challenges';
+import * as firebaseServices from '../services/firebaseServices'
 
 export default class Principal extends React.Component {
-  
-  constructor(){
+
+  constructor() {
     super();
-    this.state={
-      cristhian: [],
-      nCristhian: []
+    this.state = {
+      c1: {
+        name: '',
+        done: false
+      },
+      c2: {
+        name: '',
+        done: false
+      },
+      c3: {
+        name: '',
+        done: false
+      },
+      c4: {
+        name: '',
+        done: false
+      },
+      c5: {
+        name: '',
+        done: false
+      },
+
+
+      nc1: {
+        name: '',
+        done: false
+      },
+      nc2: {
+        name: '',
+        done: false
+      },
+      nc3: {
+        name: '',
+        done: false
+      },
+      nc4: {
+        name: '',
+        done: false
+      },
+      nc5: {
+        name: '',
+        done: false
+      },
     }
+  }
+
+  async componentWillMount() {
+    if (await firebaseServices.DVCIsReady()) {
+      await this.updateData();
+    }
+  }
+
+  async updateData() {
+    let data = await firebaseServices.getDVCData();
+    console.log("Chamei Sim!")
+    this.setState({
+      c1: data['cristhian']['c1'],
+      c2: data['cristhian']['c2'],
+      c3: data['cristhian']['c3'],
+      c4: data['cristhian']['c4'],
+      c5: data['cristhian']['c5'],
+
+      nc1: data['ncristhian']['c1'],
+      nc2: data['ncristhian']['c2'],
+      nc3: data['ncristhian']['c3'],
+      nc4: data['ncristhian']['c4'],
+      nc5: data['ncristhian']['c5']
+    })
+  }
+
+  async mark(check, ref){
+    console.log(ref);
+    await firebaseServices.markItem(check, ref);
+    await this.updateData();
   }
 
   render() {
@@ -19,25 +90,16 @@ export default class Principal extends React.Component {
       <Container style={styles.container}>
         <Tabs>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>DVC</Text></TabHeading>} >
-            <DVCForm changeNames={this.changeName.bind(this)} /> 
+            <DVCForm updateFunction = {this.updateData.bind(this)}  />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            <Challenges cristhian={this.state['cristhian']} nCristhian={this.state['nCristhian']}  />
+            <Challenges data={this.state} markFunction={this.mark.bind(this)} />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Informações</Text></TabHeading>}>
-            <Text>Informações da CRU</Text> 
+            <Text>Informações da CRU</Text>
           </Tab>
         </Tabs>
       </Container>
-    )
-  }
-  
-  changeName(state) {
-    this.setState(
-      { 
-        cristhian: [state.cristhian['c1'], state.cristhian['c2'], state.cristhian['c3'], state.cristhian['c4'], state.cristhian['c5']],
-        nCristhian: [state.ncristhian['c1'], state.ncristhian['c2'], state.ncristhian['c3'], state.ncristhian['c4'], state.ncristhian['c5']]
-      }
     )
   }
 }
@@ -46,15 +108,15 @@ export default class Principal extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#666699',
+    backgroundColor: '#a8c5c8',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
-  tabStyle:{
+  tabStyle: {
     backgroundColor: "#f8a26c"
   },
-  textTabStyle:{
+  textTabStyle: {
     color: "#fff"
   }
 

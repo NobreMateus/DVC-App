@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Item, Input, Label, Button } from 'native-base';
 import * as firebase from 'firebase';
 import * as firebaseService from '../services/firebaseServices'
@@ -21,8 +21,9 @@ export default class Login extends React.Component {
         <Image source={require('../../assets/fundo-login.png')} style={styles.backImage} ></Image>
         <View style={styles.loginArea} >
           <Input value={this.state['email']} onChange={ev=> this.setState({email: ev.nativeEvent.text}) } placeholder="E-mail" style={styles.inputStyle} />
-          <Input value={this.state['senha']} onChange={ev=>this.setState({senha: ev.nativeEvent.text}) } placeholder="Senha" style={styles.inputStyle} />
-          <Button style={styles.buttonStyle} onPress={() => this.enterButtonFunction() } ><Text style={{ color: "#fff" }}>ENTRAR</Text></Button>
+          <Input value={this.state['senha']} secureTextEntry={true} onChange={ev=>this.setState({senha: ev.nativeEvent.text}) } placeholder="Senha" style={styles.inputStyle} />
+          <TouchableOpacity style={styles.buttonStyle} onPress={() => this.enterButtonFunction() } ><Text style={{ color: "#fff" }}>ENTRAR</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>this.signUpClick()} ><Text style={styles.signupText} >Cadastre-se</Text></TouchableOpacity>
         </View>
       </View>
     )
@@ -40,6 +41,10 @@ export default class Login extends React.Component {
     }else{
       console.log("Falha no Login!")
     }
+  }
+
+  signUpClick(){
+    this.props.navigation.navigate('SignUp');
   }
 
 }
@@ -63,11 +68,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 25,
     marginBottom: 14,
-    paddingHorizontal: 7
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   loginArea: {
     marginTop:100,
-    height: 190,
+    height: 210,
     width: 250
   },
   buttonStyle: {
@@ -78,7 +84,14 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginHorizontal: 25,
     // height: 12,
-    backgroundColor: "#ff8745"
+    backgroundColor: "#ff8745",
+    height: 45,
+  },
+  signupText:{
+    fontSize: 18,
+    color: '#ff8745',
+    textAlign:"center",
+    textDecorationLine: 'underline',
   }
 
 });

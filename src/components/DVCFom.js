@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Textarea, Button } from 'native-base';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as firebase from 'firebase';
-import * as firebaseServices from '../services/firebaseServices'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as firebaseServices from '../services/firebaseServices';
+import { StackActions, NavigationActions } from 'react-navigation';
+
 
 export default class DVCForm extends React.Component {
 
@@ -19,18 +20,48 @@ export default class DVCForm extends React.Component {
             promise: "",
             order: "",
             cristhian: {
-                c1: "",
-                c2: "",
-                c3: "",
-                c4: "",
-                c5: "",
+                c1:{
+                    name: '',
+                    done: false
+                }, 
+                c2: {
+                    name: '',
+                    done: false
+                },
+                c3: {
+                    name: '',
+                    done: false
+                },
+                c4: {
+                    name: '',
+                    done: false
+                },
+                c5: {
+                    name: '',
+                    done: false
+                },
             },
             ncristhian: {
-                c1: "",
-                c2: "",
-                c3: "",
-                c4: "",
-                c5: "",
+                c1:{
+                    name: '',
+                    done: false
+                }, 
+                c2: {
+                    name: '',
+                    done: false
+                },
+                c3: {
+                    name: '',
+                    done: false
+                },
+                c4: {
+                    name: '',
+                    done: false
+                },
+                c5: {
+                    name: '',
+                    done: false
+                },
             }
         }
     }
@@ -41,6 +72,13 @@ export default class DVCForm extends React.Component {
     }
 
     async componentWillMount() {
+
+        // const resetAction = StackActions.reset({
+        //     index: 0,
+        //     actions: [NavigationActions.navigate({ routeName: 'Principal' })],
+        // });
+        // this.props.navigation.dispatch(resetAction);
+
         if (await firebaseServices.DVCIsReady()) {
             let data = await firebaseServices.getDVCData();
             this.setState({
@@ -52,19 +90,49 @@ export default class DVCForm extends React.Component {
                 promise: data['promise'],
                 order: data['order'],
                 cristhian: {
-                    c1: data['cristhian']['c1'],
-                    c2: data['cristhian']['c2'],
-                    c3: data['cristhian']['c3'],
-                    c4: data['cristhian']['c4'],
-                    c5: data['cristhian']['c5'],
+                    c1:{
+                        name: data['cristhian']['c1']['name'],
+                        done: data['cristhian']['c1']['done'],
+                    }, 
+                    c2: {
+                        name: data['cristhian']['c2']['name'],
+                        done: data['cristhian']['c2']['done'],
+                    },
+                    c3: {
+                        name: data['cristhian']['c3']['name'],
+                        done: data['cristhian']['c3']['done'],
+                    },
+                    c4: {
+                        name: data['cristhian']['c4']['name'],
+                        done: data['cristhian']['c4']['done'],
+                    },
+                    c5: {
+                        name: data['cristhian']['c5']['name'],
+                        done: data['cristhian']['c5']['done']
+                    },
                 },
 
                 ncristhian: {
-                    c1: data['ncristhian']['c1'],
-                    c2: data['ncristhian']['c2'],
-                    c3: data['ncristhian']['c3'],
-                    c4: data['ncristhian']['c4'],
-                    c5: data['ncristhian']['c5'],
+                    c1:{
+                        name: data['ncristhian']['c1']['name'],
+                        done: data['ncristhian']['c1']['done']
+                    }, 
+                    c2: {
+                        name: data['ncristhian']['c2']['name'],
+                        done: data['ncristhian']['c2']['done']
+                    },
+                    c3: {
+                        name: data['ncristhian']['c3']['name'],
+                        done: data['ncristhian']['c3']['done']
+                    },
+                    c4: {
+                        name: data['ncristhian']['c4']['name'],
+                        done: data['ncristhian']['c4']['done']
+                    },
+                    c5: {
+                        name: data['ncristhian']['c5']['name'],
+                        done: data['ncristhian']['c5']['done']
+                    },
                 },
                 editMode: false,
             })
@@ -81,7 +149,7 @@ export default class DVCForm extends React.Component {
                     <Form style={{ ...styles.form, marginTop: 15 }}>
 
                         {this.state['editMode'] ? null :
-                            <Button light onPress={() => this.enableEditForm()} style={styles.button}><Text style={{ ...styles.textButton, color: "#a8c5c8" }} > Editar </Text></Button>}
+                            <TouchableOpacity light onPress={() => this.enableEditForm()} style={styles.button}><Text style={{ ...styles.textButton, color: "#a8c5c8" }} > Editar </Text></TouchableOpacity>}
 
                         <View style={styles.input} >
                             <Label style={styles.labelStyle}>Nome</Label>
@@ -126,45 +194,45 @@ export default class DVCForm extends React.Component {
                         <View style={styles.input} >
                             <Label style={{ ...styles.labelStyle, ...styles.input }}>Liste 5 cristãos para fazerem o DVC:</Label>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c1']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c1']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: { name: t, done: this.state['ncristhian']['c1']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c2']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c2: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c2']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c2: { name: t, done: this.state['ncristhian']['c2']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c3']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c3: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c3']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c3: { name: t, done: this.state['ncristhian']['c3']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c4']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c4: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c4']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c4: { name: t, done: this.state['ncristhian']['c4']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c5']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c5: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c5']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c5: { name: t, done: this.state['ncristhian']['c5']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                         </View>
 
                         <View style={styles.input} >
                             <Label style={{ ...styles.labelStyle, ...styles.input }}>Liste 5 não cristãos para evangelizar:</Label>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c1']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c1: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c1']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c1: { name: t, done: this.state['ncristhian']['c1']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c2']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c2: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c2']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c2: { name: t, done: this.state['ncristhian']['c2']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c3']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c3: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c3']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c3: { name: t, done: this.state['ncristhian']['c3']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c4']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c4: t } })} disabled={!this.state['editMode']} />
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['ncristhian']['c4']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c4: { name: t, done: this.state['ncristhian']['c4']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                             <View style={styles.input}>
                                 <Input onFocus={(event) => {
                                     this._scrollToInput(event.target)
-                                }} style={styles.textInput} value={this.state['ncristhian']['c5']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c5: t } })} disabled={!this.state['editMode']} />
+                                }} style={styles.textInput} value={this.state['ncristhian']['c5']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c5: { name: t, done: this.state['ncristhian']['c5']['done'] }  } })} disabled={!this.state['editMode']} />
                             </View>
                         </View>
 
                         {this.state['editMode'] ?
-                            <Button primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Salvar </Text></Button>
+                            <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Salvar </Text></TouchableOpacity>
                             : null}
 
                     </Form>
@@ -173,10 +241,10 @@ export default class DVCForm extends React.Component {
         );
     }
 
-    saveData() {
+    async saveData() {
         this.setState({ editMode: false });
-        this.props.changeNames(this.state);
-        firebaseServices.addDVCForm(this.state);
+        await firebaseServices.addDVCForm(this.state);
+        await this.props.updateFunction();
     }
 
     enableEditForm() {
@@ -236,6 +304,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginHorizontal: 35,
         height: 45,
-        backgroundColor: "#ff8745"
+        backgroundColor: "#ff8745",
     }
 });

@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import Login from '../screens/Login';
 import Principal from '../screens/Principal';
+import SignUp from '../screens/SignUp';
 
 export const AppNavigator = createStackNavigator(
   {
@@ -15,6 +16,7 @@ export const AppNavigator = createStackNavigator(
       screen: Principal,
       navigationOptions:{
         headerShown: true,
+        headerLeft: null,
         headerTitleStyle:{
           color:"#fff",
         },
@@ -24,6 +26,12 @@ export const AppNavigator = createStackNavigator(
         }
       },
     },
+    SignUp:{
+      screen: SignUp,
+      navigationOptions:{
+        headerShown: false,
+      },
+    }
   }, 
 
   {
