@@ -3,14 +3,19 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Item, Input, Label, Button } from 'native-base';
 import * as firebase from 'firebase';
 import * as firebaseService from '../services/firebaseServices'
+import Spinner from 'react-native-loading-spinner-overlay';
+import { connect } from 'react-redux';
+import { login } from '../store/actions/user';
+import { setData } from '../store/actions/data';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
   constructor(){
     super();
     this.state = {
       email: '',
       senha: '',
+      spinner: false,
     }
   }
 
@@ -19,8 +24,13 @@ export default class Login extends React.Component {
     return (
       <View style={styles.container}>
         <Image source={require('../../assets/fundo-login.png')} style={styles.backImage} ></Image>
+        <Spinner
+          visible={this.state.spinner}
+          textContent={'Carregando...'}
+          textStyle={styles.spinnerTextStyle}
+        />
         <View style={styles.loginArea} >
-          <Input value={this.state['email']} onChange={ev=> this.setState({email: ev.nativeEvent.text}) } placeholder="E-mail" style={styles.inputStyle} />
+          <Input value={this.state['email']} autoCapitalize="none" onChange={ev=> this.setState({email: ev.nativeEvent.text}) } placeholder="E-mail" style={styles.inputStyle} />
           <Input value={this.state['senha']} secureTextEntry={true} onChange={ev=>this.setState({senha: ev.nativeEvent.text}) } placeholder="Senha" style={styles.inputStyle} />
           <TouchableOpacity style={styles.buttonStyle} onPress={() => this.enterButtonFunction() } ><Text style={{ color: "#fff" }}>ENTRAR</Text></TouchableOpacity>
           <TouchableOpacity onPress={()=>this.signUpClick()} ><Text style={styles.signupText} >Cadastre-se</Text></TouchableOpacity>
@@ -30,17 +40,33 @@ export default class Login extends React.Component {
   }
 
   async enterButtonFunction(){
+    this.setState({
+      spinner: true
+    })
+
+    
+
     try{
       let credential = await firebase.auth().signInWithEmailAndPassword(this.state['email'], this.state['senha']);
     }catch(e){
       console.log(e);
     }
 
+    this.props.onLogin({
+      email: this.state['email'],
+      uid: firebase.auth().currentUser.uid
+    })
+    let data = await firebaseService.getDVCData();
+    this.props.setData({...data});
+
     if(firebase.auth().currentUser != null){
       this.props.navigation.navigate('Principal');
     }else{
       console.log("Falha no Login!")
     }
+    this.setState({
+      spinner: false
+    })
   }
 
   signUpClick(){
@@ -48,6 +74,15 @@ export default class Login extends React.Component {
   }
 
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: user => dispatch(login(user)),
+    setData: data => dispatch(setData(data))
+  }  
+}
+
+export default connect(null, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   container: {
@@ -92,6 +127,9 @@ const styles = StyleSheet.create({
     color: '#ff8745',
     textAlign:"center",
     textDecorationLine: 'underline',
+  },
+  spinnerTextStyle:{
+    color: "#FFF"
   }
 
 });

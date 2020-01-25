@@ -4,8 +4,9 @@ import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-bas
 import DVCForm from '../components/DVCFom';
 import Challenges from '../components/Challenges';
 import * as firebaseServices from '../services/firebaseServices'
+import { connect } from 'react-redux';
 
-export default class Principal extends React.Component {
+class Principal extends React.Component {
 
   constructor() {
     super();
@@ -52,17 +53,21 @@ export default class Principal extends React.Component {
         name: '',
         done: false
       },
+      lastUpdate: new Date().toUTCString()
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    console.log(this.props.name)
     if (await firebaseServices.DVCIsReady()) {
       await this.updateData();
     }
   }
 
   async updateData() {
+    console.log("Entrei")
     let data = await firebaseServices.getDVCData();
+    // console.log(data)
     this.setState({
       c1: data['cristhian']['c1'],
       c2: data['cristhian']['c2'],
@@ -74,11 +79,19 @@ export default class Principal extends React.Component {
       nc2: data['ncristhian']['c2'],
       nc3: data['ncristhian']['c3'],
       nc4: data['ncristhian']['c4'],
-      nc5: data['ncristhian']['c5']
+      nc5: data['ncristhian']['c5'],
+
+      lastUpdate: new Date().toUTCString()
     })
   }
 
+  logoutFunction(){
+    this.props.navigation.navigate('Login');
+  }
+
   render() {
+    // console.log(this.state);
+    // console.log("RENDER")
     return (
       <Container style={styles.container}>
         <Tabs>
@@ -86,7 +99,7 @@ export default class Principal extends React.Component {
             <DVCForm updateFunction = {this.updateData.bind(this)}  />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            <Challenges data={this.state} />
+            <Challenges />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Informações</Text></TabHeading>}>
             <Text>Informações da CRU</Text>
@@ -96,6 +109,14 @@ export default class Principal extends React.Component {
     )
   }
 }
+
+const mapStateToProps = ({data}) => {
+  return {
+    name: data.name
+  }
+} 
+
+export default connect(mapStateToProps, null)(Principal)
 
 
 const styles = StyleSheet.create({

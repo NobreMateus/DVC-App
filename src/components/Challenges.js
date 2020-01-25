@@ -3,9 +3,11 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, ListItem, CheckBox, Text, Body } from 'native-base';
 import ChallengeCard from './ChallengeCard';
 import * as firebaseServices from '../services/firebaseServices'
-import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { setData } from '../store/actions/data';
 
-export default class Challenges extends React.Component {
+
+class Challenges extends React.Component {
 
   cCount = 0;
   ncCount = 0;
@@ -59,95 +61,49 @@ export default class Challenges extends React.Component {
           name: '',
           done: false
         },
-      },
-      lastUpdate: new Date().toISOString()
+      }
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
-      cristhian: {
-        c1: {
-          name: this.props['data']['c1']['name'],
-          done: this.props['data']['c1']['done'],
-        },
-        c2: {
-          name: this.props['data']['c2']['name'],
-          done: this.props['data']['c2']['done'],
-        },
-        c3: {
-          name: this.props['data']['c3']['name'],
-          done: this.props['data']['c3']['done'],
-        },
-        c4: {
-          name: this.props['data']['c4']['name'],
-          done: this.props['data']['c4']['done'],
-        },
-        c5: {
-          name: this.props['data']['c5']['name'],
-          done: this.props['data']['c5']['done']
-        },
-      },
-
-      ncristhian: {
-        c1: {
-          name: this.props['data']['nc1']['name'],
-          done: this.props['data']['nc1']['done']
-        },
-        c2: {
-          name: this.props['data']['nc2']['name'],
-          done: this.props['data']['nc2']['done']
-        },
-        c3: {
-          name: this.props['data']['nc3']['name'],
-          done: this.props['data']['nc3']['done']
-        },
-        c4: {
-          name: this.props['data']['nc4']['name'],
-          done: this.props['data']['nc4']['done']
-        },
-        c5: {
-          name: this.props['data']['nc5']['name'],
-          done: this.props['data']['nc5']['done']
-        },
-      },
-      lastUpdate: new Date().toISOString()
+      ...this.props.data,
     })
     this.setStartCount();
   }
 
-  setCount(type, obj, check){
+  setCount(type, obj, check) {
     let start = 0;
-    if(type=="cristhian"){
-      for(let c in obj){
-        if(obj[c]['done']) start++;
+    if (type == "cristhian") {
+      for (let c in obj) {
+        if (obj[c]['done']) start++;
       }
-      check?start++:start--;
+      check ? start++ : start--;
       this.cCount = start;
-    }else if(type=="ncristhian") {
-      for(let c in obj){
-        if(obj[c]['done']) start++;
+    } else if (type == "ncristhian") {
+      for (let c in obj) {
+        if (obj[c]['done']) start++;
       }
-      check?start++:start--;
+      check ? start++ : start--;
       this.ncCount = start;
     }
   }
 
-  setStartCount(){
+  setStartCount() {
     let start = 0;
-    this.props['data']['c1']['done']?start++:null;
-    this.props['data']['c2']['done']?start++:null;
-    this.props['data']['c3']['done']?start++:null;
-    this.props['data']['c4']['done']?start++:null;
-    this.props['data']['c5']['done']?start++:null;
+    this.props['data']['cristhian']['c1']['done'] ? start++ : null;
+    this.props['data']['cristhian']['c2']['done'] ? start++ : null;
+    this.props['data']['cristhian']['c3']['done'] ? start++ : null;
+    this.props['data']['cristhian']['c4']['done'] ? start++ : null;
+    this.props['data']['cristhian']['c5']['done'] ? start++ : null;
     this.cCount = start;
     start = 0;
-    
-    this.props['data']['nc1']['done']?start++:null;
-    this.props['data']['nc2']['done']?start++:null;
-    this.props['data']['nc3']['done']?start++:null;
-    this.props['data']['nc4']['done']?start++:null;
-    this.props['data']['nc5']['done']?start++:null;
+
+    this.props['data']['ncristhian']['c1']['done'] ? start++ : null;
+    this.props['data']['ncristhian']['c2']['done'] ? start++ : null;
+    this.props['data']['ncristhian']['c3']['done'] ? start++ : null;
+    this.props['data']['ncristhian']['c4']['done'] ? start++ : null;
+    this.props['data']['ncristhian']['c5']['done'] ? start++ : null;
     this.ncCount = start;
   }
 
@@ -194,28 +150,57 @@ export default class Challenges extends React.Component {
     );
   }
 
-  async mark(type, ref){
+  async mark(type, ref) {
     let check = !this.state[type][ref]['done'];
     this.setCount(type, this.state[type], check);
-    
-    let obj = {[type]: {
-      ...this.state[type],
-      [ref]:{
-        name: this.state[type][ref]['name'],
-        done: check
+
+    let obj = {
+      [type]: {
+        ...this.state[type],
+        [ref]: {
+          name: this.state[type][ref]['name'],
+          done: check
+        }
       }
-    }} 
-    
-    this.setState({
-      ...obj,
-      lastUpdate: new Date().toISOString()      
-    }); 
-    
+    }
+
+    await this.setState({
+      ...obj
+    });
+
+    this.props.setData({
+      name: this.state['name'],
+      phone: this.state['phone'],
+      university: this.state['university'],
+      vision: this.state['vision'],
+      change: this.state['change'],
+      promise: this.state['promise'],
+      order: this.state['order'],
+      cristhian: this.state['cristhian'],
+      ncristhian: this.state['ncristhian'],
+    })
+
     await firebaseServices.markItem(type, ref, check);
-    // await this.updateData();
   }
 
 }
+
+const mapStateToProps = ({ data }) => {
+  return {
+    data: {
+      ...data
+    }
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setData: data => dispatch(setData(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Challenges);
+
 
 const styles = StyleSheet.create({
   container: {
