@@ -8,83 +8,6 @@ import { connect } from 'react-redux';
 
 class Principal extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      c1: {
-        name: '',
-        done: false
-      },
-      c2: {
-        name: '',
-        done: false
-      },
-      c3: {
-        name: '',
-        done: false
-      },
-      c4: {
-        name: '',
-        done: false
-      },
-      c5: {
-        name: '',
-        done: false
-      },
-
-
-      nc1: {
-        name: '',
-        done: false
-      },
-      nc2: {
-        name: '',
-        done: false
-      },
-      nc3: {
-        name: '',
-        done: false
-      },
-      nc4: {
-        name: '',
-        done: false
-      },
-      nc5: {
-        name: '',
-        done: false
-      },
-      lastUpdate: new Date().toUTCString()
-    }
-  }
-
-  async componentDidMount() {
-    console.log(this.props.name)
-    if (await firebaseServices.DVCIsReady()) {
-      await this.updateData();
-    }
-  }
-
-  async updateData() {
-    console.log("Entrei")
-    let data = await firebaseServices.getDVCData();
-    // console.log(data)
-    this.setState({
-      c1: data['cristhian']['c1'],
-      c2: data['cristhian']['c2'],
-      c3: data['cristhian']['c3'],
-      c4: data['cristhian']['c4'],
-      c5: data['cristhian']['c5'],
-
-      nc1: data['ncristhian']['c1'],
-      nc2: data['ncristhian']['c2'],
-      nc3: data['ncristhian']['c3'],
-      nc4: data['ncristhian']['c4'],
-      nc5: data['ncristhian']['c5'],
-
-      lastUpdate: new Date().toUTCString()
-    })
-  }
-
   logoutFunction(){
     this.props.navigation.navigate('Login');
   }
@@ -96,7 +19,7 @@ class Principal extends React.Component {
       <Container style={styles.container}>
         <Tabs>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>DVC</Text></TabHeading>} >
-            <DVCForm updateFunction = {this.updateData.bind(this)}  />
+            <DVCForm />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
             <Challenges />

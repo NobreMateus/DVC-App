@@ -49,21 +49,21 @@ class Login extends React.Component {
     try{
       let credential = await firebase.auth().signInWithEmailAndPassword(this.state['email'], this.state['senha']);
     }catch(e){
-      console.log(e);
+      alert("Erro no Login!");
     }
-
-    this.props.onLogin({
-      email: this.state['email'],
-      uid: firebase.auth().currentUser.uid
-    })
-    let data = await firebaseService.getDVCData();
-    this.props.setData({...data});
 
     if(firebase.auth().currentUser != null){
+      this.props.onLogin({
+        email: this.state['email'],
+        uid: firebase.auth().currentUser.uid
+      })
+      
+      let data = await firebaseService.getDVCData();
+      this.props.setData({...data});
+
       this.props.navigation.navigate('Principal');
-    }else{
-      console.log("Falha no Login!")
     }
+    
     this.setState({
       spinner: false
     })

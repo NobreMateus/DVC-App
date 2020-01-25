@@ -14,97 +14,24 @@ class Challenges extends React.Component {
   cStrings = ['c1', 'c2', 'c3', 'c4', 'c5']
   ncStrings = ['nc1', 'nc2', 'nc3', 'nc4', 'nc5']
 
-  constructor() {
-    super();
-    this.state = {
-      cristhian: {
-        c1: {
-          name: '',
-          done: false,
-        },
-        c2: {
-          name: '',
-          done: false,
-        },
-        c3: {
-          name: '',
-          done: false,
-        },
-        c4: {
-          name: '',
-          done: false,
-        },
-        c5: {
-          name: '',
-          done: false
-        },
-      },
-
-      ncristhian: {
-        c1: {
-          name: '',
-          done: false
-        },
-        c2: {
-          name: '',
-          done: false
-        },
-        c3: {
-          name: '',
-          done: false
-        },
-        c4: {
-          name: '',
-          done: false
-        },
-        c5: {
-          name: '',
-          done: false
-        },
-      }
-    }
-  }
-
-  componentDidMount() {
-    this.setState({
-      ...this.props.data,
-    })
-    this.setStartCount();
-  }
-
-  setCount(type, obj, check) {
-    let start = 0;
-    if (type == "cristhian") {
-      for (let c in obj) {
-        if (obj[c]['done']) start++;
-      }
-      check ? start++ : start--;
-      this.cCount = start;
-    } else if (type == "ncristhian") {
-      for (let c in obj) {
-        if (obj[c]['done']) start++;
-      }
-      check ? start++ : start--;
-      this.ncCount = start;
-    }
-  }
-
-  setStartCount() {
+  cristhianCount() {
     let start = 0;
     this.props['data']['cristhian']['c1']['done'] ? start++ : null;
     this.props['data']['cristhian']['c2']['done'] ? start++ : null;
     this.props['data']['cristhian']['c3']['done'] ? start++ : null;
     this.props['data']['cristhian']['c4']['done'] ? start++ : null;
     this.props['data']['cristhian']['c5']['done'] ? start++ : null;
-    this.cCount = start;
-    start = 0;
+    return start;
+  }
 
+  ncristhianCount(){
+    let start = 0;
     this.props['data']['ncristhian']['c1']['done'] ? start++ : null;
     this.props['data']['ncristhian']['c2']['done'] ? start++ : null;
     this.props['data']['ncristhian']['c3']['done'] ? start++ : null;
     this.props['data']['ncristhian']['c4']['done'] ? start++ : null;
     this.props['data']['ncristhian']['c5']['done'] ? start++ : null;
-    this.ncCount = start;
+    return start;
   }
 
   render() {
@@ -117,7 +44,7 @@ class Challenges extends React.Component {
                 Falar de Cristo para 5 não Cristãos
               </Text>
               <Text style={styles.pointsText}>
-                {this.ncCount}/5
+                {this.ncristhianCount()}/5
               </Text>
             </View>
             {this.cStrings.map((c, n) => {
@@ -125,22 +52,22 @@ class Challenges extends React.Component {
                 <TouchableOpacity key={n} style={{ marginBottom: 5 }}
                   onPress={check => this.mark("ncristhian", c)}
                 >
-                  <ChallengeCard text={this.state['ncristhian'][c]['name']} checked={this.state['ncristhian'][c]['done']} />
+                  <ChallengeCard text={this.props['data']['ncristhian'][c]['name']} checked={this.props['data']['ncristhian'][c]['done']} />
                 </TouchableOpacity>
               )
             })}
 
             <View style={styles.menu}>
               <Text style={styles.principalText}>Desafiar 5 Cristãos a fazer o mesmo</Text>
-              <Text style={styles.pointsText}>{this.cCount}/5</Text>
+              <Text style={styles.pointsText}>{this.cristhianCount()}/5</Text>
             </View>
-
+ 
             {this.cStrings.map((nc, n) => {
               return (
                 <TouchableOpacity key={n} style={{ marginBottom: 5 }}
                   onPress={check => this.mark("cristhian", nc)}
                 >
-                  <ChallengeCard text={this.state['cristhian'][nc]['name']} checked={this.state['cristhian'][nc]['done']} />
+                  <ChallengeCard text={this.props['data']['cristhian'][nc]['name']} checked={this.props['data']['cristhian'][nc]['done']} />
                 </TouchableOpacity>
               )
             })}
@@ -151,36 +78,38 @@ class Challenges extends React.Component {
   }
 
   async mark(type, ref) {
-    let check = !this.state[type][ref]['done'];
-    this.setCount(type, this.state[type], check);
-
+    let check = !this.props['data'][type][ref]['done'];
+    
     let obj = {
       [type]: {
-        ...this.state[type],
+        ...this.props['data'][type],
         [ref]: {
-          name: this.state[type][ref]['name'],
+          name: this.props['data'][type][ref]['name'],
           done: check
         }
       }
     }
 
-    await this.setState({
+    await this.props.setData({
+      name: this.props['data']['name'],
+      phone: this.props['data']['phone'],
+      university: this.props['data']['university'],
+      vision: this.props['data']['vision'],
+      change: this.props['data']['change'],
+      promise: this.props['data']['promise'],
+      order: this.props['data']['order'],
+      cristhian: this.props['data']['cristhian'],
+      ncristhian: this.props['data']['ncristhian'],
       ...obj
-    });
-
-    this.props.setData({
-      name: this.state['name'],
-      phone: this.state['phone'],
-      university: this.state['university'],
-      vision: this.state['vision'],
-      change: this.state['change'],
-      promise: this.state['promise'],
-      order: this.state['order'],
-      cristhian: this.state['cristhian'],
-      ncristhian: this.state['ncristhian'],
     })
 
-    await firebaseServices.markItem(type, ref, check);
+    try{
+      await firebaseServices.markItem(type, ref, check);
+    }catch(e){
+      alert("Erro!");
+    }
+
+    console.log(this.props['data']);
   }
 
 }

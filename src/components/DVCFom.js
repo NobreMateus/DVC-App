@@ -24,45 +24,35 @@ class DVCForm extends React.Component {
             cristhian: {
                 c1: {
                     name: '',
-                    done: false
                 },
                 c2: {
                     name: '',
-                    done: false
                 },
                 c3: {
                     name: '',
-                    done: false
                 },
                 c4: {
                     name: '',
-                    done: false
                 },
                 c5: {
                     name: '',
-                    done: false
                 },
             },
             ncristhian: {
                 c1: {
                     name: '',
-                    done: false
                 },
                 c2: {
                     name: '',
-                    done: false
                 },
                 c3: {
                     name: '',
-                    done: false
                 },
                 c4: {
                     name: '',
-                    done: false
                 },
                 c5: {
                     name: '',
-                    done: false
                 },
             },
             spinner: false,
@@ -75,13 +65,6 @@ class DVCForm extends React.Component {
     }
 
     async componentDidMount() {
-
-        // const resetAction = StackActions.reset({
-        //     index: 0,
-        //     actions: [NavigationActions.navigate({ routeName: 'Principal' })],
-        // });
-        // this.props.navigation.dispatch(resetAction);
-
         this.setState({
             spinner: true
         });
@@ -92,69 +75,11 @@ class DVCForm extends React.Component {
                 editMode: false,
                 spinner: false
             })
-            // let data = await firebaseServices.getDVCData();
-            // this.setState({
-            //     name: data['name'],
-            //     phone: data['phone'],
-            //     university: data['university'],
-            //     vision: data['vision'],
-            //     change: data['change'],
-            //     promise: data['promise'],
-            //     order: data['order'],
-            //     cristhian: {
-            //         c1: {
-            //             name: data['cristhian']['c1']['name'],
-            //             done: data['cristhian']['c1']['done'],
-            //         },
-            //         c2: {
-            //             name: data['cristhian']['c2']['name'],
-            //             done: data['cristhian']['c2']['done'],
-            //         },
-            //         c3: {
-            //             name: data['cristhian']['c3']['name'],
-            //             done: data['cristhian']['c3']['done'],
-            //         },
-            //         c4: {
-            //             name: data['cristhian']['c4']['name'],
-            //             done: data['cristhian']['c4']['done'],
-            //         },
-            //         c5: {
-            //             name: data['cristhian']['c5']['name'],
-            //             done: data['cristhian']['c5']['done']
-            //         },
-            //     },
-
-            //     ncristhian: {
-            //         c1: {
-            //             name: data['ncristhian']['c1']['name'],
-            //             done: data['ncristhian']['c1']['done']
-            //         },
-            //         c2: {
-            //             name: data['ncristhian']['c2']['name'],
-            //             done: data['ncristhian']['c2']['done']
-            //         },
-            //         c3: {
-            //             name: data['ncristhian']['c3']['name'],
-            //             done: data['ncristhian']['c3']['done']
-            //         },
-            //         c4: {
-            //             name: data['ncristhian']['c4']['name'],
-            //             done: data['ncristhian']['c4']['done']
-            //         },
-            //         c5: {
-            //             name: data['ncristhian']['c5']['name'],
-            //             done: data['ncristhian']['c5']['done']
-            //         },
-            //     },
-            //     editMode: false,
-            //     spinner: false
-            // })
         } else {
             this.setState({
                 spinner: false
             })
         }
-
 
     }
 
@@ -266,8 +191,10 @@ class DVCForm extends React.Component {
     }
 
     async saveData() {
+        console.log(this.props.data);
+        console.log("SaveData");
         this.setState({ editMode: false });
-        this.props.setData({
+        await this.props.setData({
             name: this.state['name'],
             phone: this.state['phone'],
             university: this.state['university'],
@@ -275,16 +202,60 @@ class DVCForm extends React.Component {
             change: this.state['change'],
             promise: this.state['promise'],
             order: this.state['order'],
-            cristhian: this.state['cristhian'],
-            ncristhian: this.state['ncristhian'],
+            cristhian: {
+                c1: {
+                    name: this.state['cristhian']['c1']['name'],
+                    done: this.props.data['cristhian']['c1']['done']
+                },
+                c2: {
+                    name: this.state['cristhian']['c2']['name'],
+                    done: this.props.data['cristhian']['c2']['done']
+                },
+                c3: {
+                    name: this.state['cristhian']['c3']['name'],
+                    done: this.props.data['cristhian']['c3']['done']
+                },
+                c4: {
+                    name: this.state['cristhian']['c4']['name'],
+                    done: this.props.data['cristhian']['c4']['done']
+                },
+                c5: {
+                    name: this.state['cristhian']['c5']['name'],
+                    done: this.props.data['cristhian']['c5']['done']
+                },
+            },    
+            ncristhian: {
+                c1: {
+                    name: this.state['ncristhian']['c1']['name'],
+                    done: this.props.data['ncristhian']['c1']['done']
+                },
+                c2: {
+                    name: this.state['ncristhian']['c2']['name'],
+                    done: this.props.data['ncristhian']['c2']['done']
+                },
+                c3: {
+                    name: this.state['ncristhian']['c3']['name'],
+                    done: this.props.data['ncristhian']['c3']['done']
+                },
+                c4: {
+                    name: this.state['ncristhian']['c4']['name'],
+                    done: this.props.data['ncristhian']['c4']['done']
+                },
+                c5: {
+                    name: this.state['ncristhian']['c5']['name'],
+                    done: this.props.data['ncristhian']['c5']['done']
+                },
+            },
         })
-        await firebaseServices.addDVCForm(this.state);
-        await this.props.updateFunction();
+        try{
+            await firebaseServices.addDVCForm(this.props.data);
+        }catch(e){
+            alert("Erro!")
+        }
     }
 
     enableEditForm() {
         this.setState({ editMode: true });
-        console.log(this.props['data']);
     }
 }
 

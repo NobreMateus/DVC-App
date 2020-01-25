@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 
 export async function addDVCForm( state ){
+    console.log(state);
     await firebase.database().ref("dvc-data/" + firebase.auth().currentUser.uid).set(
         {
             name: state['name'],
@@ -80,7 +81,6 @@ export async function getDVCData(){
 }
 
 export async function logout(){
-    console.log("Entrei")
     await firebase.auth().signOut();
 }
 
