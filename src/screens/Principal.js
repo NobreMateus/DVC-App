@@ -63,7 +63,6 @@ export default class Principal extends React.Component {
 
   async updateData() {
     let data = await firebaseServices.getDVCData();
-    console.log("Chamei Sim!")
     this.setState({
       c1: data['cristhian']['c1'],
       c2: data['cristhian']['c2'],
@@ -79,12 +78,6 @@ export default class Principal extends React.Component {
     })
   }
 
-  async mark(check, ref){
-    console.log(ref);
-    await firebaseServices.markItem(check, ref);
-    await this.updateData();
-  }
-
   render() {
     return (
       <Container style={styles.container}>
@@ -93,7 +86,7 @@ export default class Principal extends React.Component {
             <DVCForm updateFunction = {this.updateData.bind(this)}  />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            <Challenges data={this.state} markFunction={this.mark.bind(this)} />
+            <Challenges data={this.state} />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Informações</Text></TabHeading>}>
             <Text>Informações da CRU</Text>

@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 
 export function addDVCForm( state ){
-    console.log(state);
     firebase.database().ref("dvc-data/" + firebase.auth().currentUser.uid).set(
         {
             name: state['name'],
@@ -80,12 +79,6 @@ export async function getDVCData(){
     return snapshot.val();
 }
 
-export async function markItem(check, ref){
-    console.log("dvc-data/" + firebase.auth().currentUser.uid);
-    await firebase.database().ref("dvc-data/" + firebase.auth().currentUser.uid).set({
-        [ref.split("/")[0]]: {
-            [ref.split("/")[1]]: check
-        }
-
-    })
+export async function markItem(type, item, check){
+    await firebase.database().ref(`dvc-data/${firebase.auth().currentUser.uid}/${type}/${item}/done`).set(check)
 }
