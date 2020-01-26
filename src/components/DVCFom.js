@@ -191,8 +191,6 @@ class DVCForm extends React.Component {
     }
 
     async saveData() {
-        console.log(this.props.data);
-        console.log("SaveData");
         this.setState({ editMode: false });
         await this.props.setData({
             name: this.state['name'],
@@ -205,45 +203,45 @@ class DVCForm extends React.Component {
             cristhian: {
                 c1: {
                     name: this.state['cristhian']['c1']['name'],
-                    done: this.props.data['cristhian']['c1']['done']
+                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c1']['done']:false
                 },
                 c2: {
                     name: this.state['cristhian']['c2']['name'],
-                    done: this.props.data['cristhian']['c2']['done']
+                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c2']['done']:false
                 },
                 c3: {
                     name: this.state['cristhian']['c3']['name'],
-                    done: this.props.data['cristhian']['c3']['done']
+                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c3']['done']:false
                 },
                 c4: {
                     name: this.state['cristhian']['c4']['name'],
-                    done: this.props.data['cristhian']['c4']['done']
+                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c4']['done']:false
                 },
                 c5: {
                     name: this.state['cristhian']['c5']['name'],
-                    done: this.props.data['cristhian']['c5']['done']
+                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c5']['done']:false
                 },
             },    
             ncristhian: {
                 c1: {
                     name: this.state['ncristhian']['c1']['name'],
-                    done: this.props.data['ncristhian']['c1']['done']
+                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c1']['done']:false
                 },
                 c2: {
                     name: this.state['ncristhian']['c2']['name'],
-                    done: this.props.data['ncristhian']['c2']['done']
+                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c2']['done']:false
                 },
                 c3: {
                     name: this.state['ncristhian']['c3']['name'],
-                    done: this.props.data['ncristhian']['c3']['done']
+                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c3']['done']:false
                 },
                 c4: {
                     name: this.state['ncristhian']['c4']['name'],
-                    done: this.props.data['ncristhian']['c4']['done']
+                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c4']['done']:false
                 },
                 c5: {
                     name: this.state['ncristhian']['c5']['name'],
-                    done: this.props.data['ncristhian']['c5']['done']
+                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c5']['done']:false
                 },
             },
         })
@@ -256,6 +254,7 @@ class DVCForm extends React.Component {
 
     enableEditForm() {
         this.setState({ editMode: true });
+        // console.log(this.props['data'])
     }
 }
 

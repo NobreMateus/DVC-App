@@ -108,8 +108,6 @@ class Challenges extends React.Component {
     }catch(e){
       alert("Erro!");
     }
-
-    console.log(this.props['data']);
   }
 
 }

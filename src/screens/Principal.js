@@ -3,10 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
 import DVCForm from '../components/DVCFom';
 import Challenges from '../components/Challenges';
+import Info from '../components/Info';
+import NoDVCData from '../components/NoDVCData'
 import * as firebaseServices from '../services/firebaseServices'
 import { connect } from 'react-redux';
 
+
 class Principal extends React.Component {
+
 
   logoutFunction(){
     this.props.navigation.navigate('Login');
@@ -22,10 +26,10 @@ class Principal extends React.Component {
             <DVCForm />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            <Challenges />
+            {this.props.name?<Challenges /> : <NoDVCData />}
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Informações</Text></TabHeading>}>
-            <Text>Informações da CRU</Text>
+            <Info navigate={this.props.navigation.navigate} />
           </Tab>
         </Tabs>
       </Container>

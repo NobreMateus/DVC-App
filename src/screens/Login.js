@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Item, Input, Label, Button } from 'native-base';
-import * as firebase from 'firebase';
 import * as firebaseService from '../services/firebaseServices'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { connect } from 'react-redux';
 import { login } from '../store/actions/user';
 import { setData } from '../store/actions/data';
+import * as firebase from 'firebase';
 
 class Login extends React.Component {
 
@@ -40,19 +40,20 @@ class Login extends React.Component {
   }
 
   async enterButtonFunction(){
+    let error = false;
+    
     this.setState({
       spinner: true
     })
-
-    
 
     try{
       let credential = await firebase.auth().signInWithEmailAndPassword(this.state['email'], this.state['senha']);
     }catch(e){
       alert("Erro no Login!");
+      error = true;
     }
 
-    if(firebase.auth().currentUser != null){
+    if(firebase.auth().currentUser != null && !error){
       this.props.onLogin({
         email: this.state['email'],
         uid: firebase.auth().currentUser.uid
@@ -61,7 +62,7 @@ class Login extends React.Component {
       let data = await firebaseService.getDVCData();
       this.props.setData({...data});
 
-      this.props.navigation.navigate('Principal');
+      this.props.navigation.navigate('Auth');
     }
     
     this.setState({

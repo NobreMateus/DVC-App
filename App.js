@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { AppNavigator } from './src/constants/routes';
-import { createAppContainer } from 'react-navigation';
+import { AppNavigator, configRoute, optionRoute } from './src/constants/routes';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
 import {firebaseConfig} from './src/constants/firebase';
 import { Provider } from 'react-redux';
@@ -14,7 +14,8 @@ if (!firebase.apps.length) {
 
 const store = storeConfig();
 
-let Navigation = createAppContainer(AppNavigator);
+// let Navigation = createAppContainer(AppNavigator);
+let Navigation = createAppContainer(createSwitchNavigator( configRoute, optionRoute ));
 
 export default class App extends React.Component {
     render() {

@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 
 export async function addDVCForm( state ){
-    console.log(state);
     await firebase.database().ref("dvc-data/" + firebase.auth().currentUser.uid).set(
         {
             name: state['name'],
@@ -61,13 +60,15 @@ export async function addDVCForm( state ){
     )
 }
 
-export function createUser(email, password){
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(user=>{
-        firebase.database().ref("dvc-data/"+user.user.uid).set({
+export async function createUser(email, password){
+    
+    let user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    
+    await firebase.database().ref("dvc-data/"+user.user.uid).set({
             email: email,
             firstTime: true
         })
-    });
+    
 }
 
 export async function DVCIsReady(){

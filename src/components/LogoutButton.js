@@ -33,6 +33,7 @@ export default class LogoutButton extends React.Component {
     }
 
     logout(){
+        this.props.logoutFunction('Login');
         // firebaseServices.logout();
         // this.props.navigation.navigate('Login');
     }
