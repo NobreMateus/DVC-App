@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Item, Input, Label, Button } from 'native-base';
 import * as firebaseService from '../services/firebaseServices'
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -33,7 +33,12 @@ class Login extends React.Component {
           <Input value={this.state['email']} autoCapitalize="none" onChange={ev=> this.setState({email: ev.nativeEvent.text}) } placeholder="E-mail" style={styles.inputStyle} />
           <Input value={this.state['senha']} secureTextEntry={true} onChange={ev=>this.setState({senha: ev.nativeEvent.text}) } placeholder="Senha" style={styles.inputStyle} />
           <TouchableOpacity style={styles.buttonStyle} onPress={() => this.enterButtonFunction() } ><Text style={{ color: "#fff" }}>ENTRAR</Text></TouchableOpacity>
-          <TouchableOpacity onPress={()=>this.signUpClick()} ><Text style={styles.signupText} >Cadastre-se</Text></TouchableOpacity>
+          <View style={styles.linksContainer}>
+            <TouchableOpacity onPress={()=>this.signUpClick()} ><Text style={styles.signupText} >Cadastre-se</Text></TouchableOpacity>
+            <Text style={{fontSize: 22, color: "#A9A9A9"}}> | </Text>
+            <TouchableOpacity onPress={()=>this.forgotPassClick()} ><Text style={{...styles.signupText, color: "#80aaff"}} >Esqueci a Senha</Text></TouchableOpacity>
+          </View>
+            {/* <TouchableOpacity onPress={()=>this.signInGoogle()} style={styles.googleLoginArea} ><Text>Login via Google</Text></TouchableOpacity> */}
         </View>
       </View>
     )
@@ -48,8 +53,9 @@ class Login extends React.Component {
 
     try{
       let credential = await firebase.auth().signInWithEmailAndPassword(this.state['email'], this.state['senha']);
+      // await this.storeToken(JSON.stringify(credential.user))
     }catch(e){
-      alert("Erro no Login!");
+      alert(e);
       error = true;
     }
 
@@ -59,10 +65,10 @@ class Login extends React.Component {
         uid: firebase.auth().currentUser.uid
       })
       
-      let data = await firebaseService.getDVCData();
-      this.props.setData({...data});
+      // let data = await firebaseService.getDVCData();
+      // this.props.setData({...data});
 
-      this.props.navigation.navigate('Auth');
+      this.props.navigation.navigate('Principal');
     }
     
     this.setState({
@@ -70,8 +76,24 @@ class Login extends React.Component {
     })
   }
 
+  async storeToken(user) {
+    try {
+       await AsyncStorage.setItem("userData", JSON.stringify(user));
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+
   signUpClick(){
     this.props.navigation.navigate('SignUp');
+  }
+
+  forgotPassClick(){
+    this.props.navigation.navigate('ForgotPass');   
+  }
+
+  async signInGoogle(){
+    await firebaseService.googleLogin();
   }
 
 }
@@ -108,8 +130,8 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   loginArea: {
-    marginTop:100,
-    height: 210,
+    marginTop:70,
+    height: 250,
     width: 250
   },
   buttonStyle: {
@@ -131,6 +153,17 @@ const styles = StyleSheet.create({
   },
   spinnerTextStyle:{
     color: "#FFF"
+  },
+  linksContainer:{
+    flex:1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems:"center"
+  },
+  googleLoginArea:{
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop:15
   }
 
 });

@@ -3,7 +3,9 @@ import { createStackNavigator, createSwitchNavigator } from 'react-navigation-st
 import Login from '../screens/Login';
 import Principal from '../screens/Principal';
 import SignUp from '../screens/SignUp';
+import ForgotPass from '../screens/ForgotPass';
 import LogoutButton from '../components/LogoutButton';
+import Auth from '../screens/Auth';
 import { Icon, Button} from 'native-base';
 
 export const AppNavigator = createStackNavigator(
@@ -53,10 +55,27 @@ export const configRoute = {
     },
   },
 
-  Auth: AppNavigator,
+  ForgotPass:{
+    screen: ForgotPass,
+    navigationOptions:{
+      headerShown: false,
+    },
+  },
+  
+  Auth: {
+    screen: Auth,
+    navigationOptions:{
+      headerShown: false,
+    },
+  
+  },
+  Logged: AppNavigator  
+
+
+  // Auth: AppNavigator,
 }
 
 export const optionRoute = {
-  initialRouteName: 'Login',
+  initialRouteName: 'Auth',
 }
   

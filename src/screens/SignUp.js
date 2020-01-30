@@ -41,15 +41,16 @@ export default class SignUp extends React.Component {
         this.setState({
             spinner: true,
         });
-        if (this.state['senha'] == this.state['confirmsenha']) {
+        if (this.state['senha'] == this.state['confirmsenha'] && this.state['senha'].length>=6  ) {
             try {
                 let user = await firebaseService.createUser(this.state['email'], this.state['senha']);
                 // if(user){
                 alert("Conta criada com sucesso!");
+                // await firebaseService.sendEmailVer();
                 this.props.navigation.navigate('Login');
                 // }
             } catch (e) {
-                alert("Falha ao criar conta");
+                alert(e);
             }
 
             this.setState({
@@ -59,7 +60,12 @@ export default class SignUp extends React.Component {
                 spinner: false
             });
         } else {
-            alert("Senhas não compatíveis!");
+            if(this.state['senha'] == this.state['confirmsenha']) 
+                alert("Senhas não correspondem!");
+
+            else if( this.state['senha'].length>=6)
+                alert("A senha deve ter no mínimo 6 caracteres!");
+
             this.setState({
                 spinner: false,
             });

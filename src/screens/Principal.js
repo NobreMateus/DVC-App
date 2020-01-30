@@ -6,6 +6,7 @@ import Challenges from '../components/Challenges';
 import Info from '../components/Info';
 import NoDVCData from '../components/NoDVCData'
 import * as firebaseServices from '../services/firebaseServices'
+import { setData } from '../store/actions/data';
 import { connect } from 'react-redux';
 
 
@@ -14,6 +15,11 @@ class Principal extends React.Component {
 
   logoutFunction(){
     this.props.navigation.navigate('Login');
+  }
+
+  async componentDidMount(){
+    let data = await firebaseServices.getDVCData();
+    this.props.setData({...data});
   }
 
   render() {
@@ -41,9 +47,15 @@ const mapStateToProps = ({data}) => {
   return {
     name: data.name
   }
-} 
+}
 
-export default connect(mapStateToProps, null)(Principal)
+const mapDispatchToProps = dispatch => {
+  return {
+    setData: data => dispatch(setData(data))
+  }  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Principal)
 
 
 const styles = StyleSheet.create({

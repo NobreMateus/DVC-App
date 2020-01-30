@@ -248,7 +248,7 @@ class DVCForm extends React.Component {
         try{
             await firebaseServices.addDVCForm(this.props.data);
         }catch(e){
-            alert("Erro!")
+            alert(e)
         }
     }
 
