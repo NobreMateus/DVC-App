@@ -12,7 +12,7 @@ export default class ChallengeCard extends React.Component {
           <View style={styles.container} >
             <View style={styles.cardContainer}>
                 <Text style={styles.text}>{this.props.text}</Text> 
-                <View style ={ this.props.checked?styles.checked:styles.noChecked }></View>
+                {/* <View style ={ this.props.checked?styles.checked:styles.noChecked }></View> */}
             </View> 
           </View>
         );
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
       flex:1, 
       justifyContent :"center",
       paddingHorizontal: 15,  
-      height: 55,
+      height: 100,
       backgroundColor: "#fff",
       //marginBottom:5,
       borderRadius: 5

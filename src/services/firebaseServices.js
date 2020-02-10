@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 
-export async function addDVCForm( state ){
-    await firebase.database().ref("dvc-data/" + firebase.auth().currentUser.uid).set(
+export async function addDVCForm( state, formId ){
+    await firebase.database().ref("dvc-data/" + firebase.auth().currentUser.uid +"/forms/"+formId ).set(
         {
             name: state['name'],
             phone: state['phone'],

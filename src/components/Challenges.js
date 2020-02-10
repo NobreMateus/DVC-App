@@ -9,6 +9,12 @@ import { setData } from '../store/actions/data';
 
 class Challenges extends React.Component {
 
+  constructor(){
+    this.state = {
+      formsId: []
+    }
+  }
+
   cCount = 0;
   ncCount = 0;
   cStrings = ['c1', 'c2', 'c3', 'c4', 'c5']

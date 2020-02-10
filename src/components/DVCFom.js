@@ -24,35 +24,45 @@ class DVCForm extends React.Component {
             cristhian: {
                 c1: {
                     name: '',
+                    done: false
                 },
                 c2: {
                     name: '',
+                    done: false
                 },
                 c3: {
                     name: '',
+                    done: false
                 },
                 c4: {
                     name: '',
+                    done: false
                 },
                 c5: {
                     name: '',
+                    done: false
                 },
             },
             ncristhian: {
                 c1: {
                     name: '',
+                    done: false
                 },
                 c2: {
                     name: '',
+                    done: false
                 },
                 c3: {
                     name: '',
+                    done: false
                 },
                 c4: {
                     name: '',
+                    done: false
                 },
                 c5: {
                     name: '',
+                    done: false
                 },
             },
             spinner: false,
@@ -71,8 +81,8 @@ class DVCForm extends React.Component {
 
         if (await firebaseServices.DVCIsReady()) {
             this.setState({
-                ...this.props.data,
-                editMode: false,
+                //...this.props.data,
+                editMode: true,
                 spinner: false
             })
         } else {
@@ -181,7 +191,7 @@ class DVCForm extends React.Component {
                         </View>
 
                         {this.state['editMode'] ?
-                            <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Salvar </Text></TouchableOpacity>
+                            <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Adicionar </Text></TouchableOpacity>
                             : null}
 
                     </Form>
@@ -191,7 +201,8 @@ class DVCForm extends React.Component {
     }
 
     async saveData() {
-        this.setState({ editMode: false });
+        let formId = new Date().getTime();
+        await this.setState({ editMode: false });
         await this.props.setData({
             name: this.state['name'],
             phone: this.state['phone'],
@@ -244,12 +255,63 @@ class DVCForm extends React.Component {
                     done: this.props.data['ncristhian']?this.props.data['ncristhian']['c5']['done']:false
                 },
             },
+            formId: formId,
         })
+
+        console.log("Olhe State Aqui:")
+        console.log(this.state);
+
         try{
-            await firebaseServices.addDVCForm(this.props.data);
+            await firebaseServices.addDVCForm(this.state, formId);
         }catch(e){
             alert(e)
         }
+    
+        await this.setState({
+            editMode: true,
+            name: "",
+            phone: "",
+            university: "",
+            vision: "",
+            change: "",
+            promise: "",
+            order: "",
+            cristhian: {
+                c1: {
+                    name: '',
+                },
+                c2: {
+                    name: '',
+                },
+                c3: {
+                    name: '',
+                },
+                c4: {
+                    name: '',
+                },
+                c5: {
+                    name: '',
+                },
+            },
+            ncristhian: {
+                c1: {
+                    name: '',
+                },
+                c2: {
+                    name: '',
+                },
+                c3: {
+                    name: '',
+                },
+                c4: {
+                    name: '',
+                },
+                c5: {
+                    name: '',
+                },
+            },
+        })
+
     }
 
     enableEditForm() {

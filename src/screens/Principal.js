@@ -6,7 +6,7 @@ import Challenges from '../components/Challenges';
 import Info from '../components/Info';
 import NoDVCData from '../components/NoDVCData'
 import * as firebaseServices from '../services/firebaseServices'
-import { setData } from '../store/actions/data';
+import { setData, setStartData } from '../store/actions/data';
 import { connect } from 'react-redux';
 
 
@@ -19,7 +19,8 @@ class Principal extends React.Component {
 
   async componentDidMount(){
     let data = await firebaseServices.getDVCData();
-    this.props.setData({...data});
+
+    await this.props.setStartData({...data});
   }
 
   render() {
@@ -32,7 +33,7 @@ class Principal extends React.Component {
             <DVCForm />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            {this.props.name?<Challenges /> : <NoDVCData />}
+            {false?<Challenges /> : <NoDVCData />}
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Informações</Text></TabHeading>}>
             <Info navigate={this.props.navigation.navigate} />
@@ -45,13 +46,13 @@ class Principal extends React.Component {
 
 const mapStateToProps = ({data}) => {
   return {
-    name: data.name
+    data: data
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setData: data => dispatch(setData(data))
+    setStartData: data => dispatch(setStartData(data))
   }  
 }
 
