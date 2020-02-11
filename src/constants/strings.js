@@ -1,0 +1,3 @@
+export const cruQuestion = `
+Como movimento temos três elementos básicos que nos definem: evangelismo, discipulado e envio. Cremos na nossa responsabilidade de tomar a iniciativa de compartilhar Cristo. Entendemos que a ordem de Jesus para fazer discípulos inclui ensinar tudo o que Ele nos ordenou e, por isso, estamos comprometidos em ajudar no crescimento e na edificação de cristãos, novos convertidos ou não cristãos. Também entendemos que somos chamados à multiplicação espiritual, capacitando e treinando estudantes para serem enviados como discípulos multiplicadores por toda a vida, começando agora onde estão na universidade.
+`

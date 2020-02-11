@@ -13,7 +13,6 @@ class Auth extends React.Component {
   }
 
   render(){
-    
     return (
       <View>
         
@@ -36,8 +35,10 @@ class Auth extends React.Component {
     //   }else{
     //     this.props.navigation.navigate('Login');
     //   }
+        // let user =  firebase.auth().currentUser;
+        // this.props.navigation.navigate(user ? 'Principal' : 'noAuth');
         firebase.auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'Principal' : 'noAuth')
+          this.props.navigation.navigate(user ? 'Principal' : 'noAuth')
         })
     } catch (error) {
       console.log("Something went wrong", error);

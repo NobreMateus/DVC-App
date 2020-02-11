@@ -77,13 +77,13 @@ export const LoginNavigator = createStackNavigator({
     },
   },
   
-  Auth: {
-    screen: Auth,
-    navigationOptions:{
-      headerShown: false,
-    },
+  // Auth: {
+  //   screen: Auth,
+  //   navigationOptions:{
+  //     headerShown: false,
+  //   },
   
-  },
+  // },
 
   
 

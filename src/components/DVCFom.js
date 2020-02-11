@@ -7,6 +7,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { connect } from 'react-redux';
 import { setData } from '../store/actions/data';
+import { cruQuestion } from '../constants/strings';
 
 class DVCForm extends React.Component {
 
@@ -21,6 +22,7 @@ class DVCForm extends React.Component {
             change: "",
             promise: "",
             order: "",
+            help: "",
             cristhian: {
                 c1: {
                     name: '',
@@ -71,7 +73,7 @@ class DVCForm extends React.Component {
 
     _scrollToInput(reactNode) {
         // Add a 'scroll' ref to your ScrollView
-        this.scroll.props.scrollToFocusedInput(reactNode, 220)
+        this.scroll.props.scrollToFocusedInput(reactNode, 190)
     }
 
     async componentDidMount() {
@@ -139,16 +141,20 @@ class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>Mateus 28.18-20</Text>. O que Jesus promete?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>Mateus 28.18-20</Text>. O que Jesus está ensinando aqui? E o que ele promete?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['promise']} onChangeText={t => this.setState({ promise: t })} disabled={!this.state['editMode']} />
                             <Text ><Text style={{ color: "#ff8745" }}>Ir</Text> - Ganhar</Text>
                             <Text ><Text style={{ color: "#ff8745" }}>Fazer discípulos</Text> - Edificar</Text>
                             <Text ><Text style={{ color: "#ff8745" }}>Todas as nações</Text> -  Enviar</Text>
                         </View>
 
-                        <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>2 Timóteo 2.2</Text>. O que Paulo está dizendo?</Label>
+                        <View style={{...styles.input}} >
+                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>2 Timóteo 2.2</Text>. De acordo com Paulo, em que tipo de pessoas nós devemos investir?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['order']} onChangeText={t => this.setState({ order: t })} disabled={!this.state['editMode']} />
+                        </View>
+
+                        <View>
+                            <Text style={{fontSize:16, color: "#4f4f4f", textAlign: 'auto', marginTop:-20 }} >{cruQuestion}</Text>
                         </View>
 
                         <View style={styles.input} >
@@ -191,6 +197,11 @@ class DVCForm extends React.Component {
                             </View>
                         </View>
 
+                        <View style={{...styles.input}} >
+                            <Label style={styles.labelStyle}>Como podemos te ajudar? Do que você precisa?</Label>
+                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['help']} onChangeText={t => this.setState({ help: t })} disabled={!this.state['editMode']} />
+                        </View>
+
                         {this.state['editMode'] ?
                             <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Adicionar </Text></TouchableOpacity>
                             : null}
@@ -212,6 +223,7 @@ class DVCForm extends React.Component {
             change: this.state['change'],
             promise: this.state['promise'],
             order: this.state['order'],
+            help: this.state['help'],
             cristhian: {
                 c1: {
                     name: this.state['cristhian']['c1']['name'],
@@ -261,6 +273,7 @@ class DVCForm extends React.Component {
 
         try{
             await firebaseServices.addDVCForm(this.state, formId);
+            alert("DVC adicionado com Sucesso!")
         }catch(e){
             alert(e)
         }
@@ -274,6 +287,7 @@ class DVCForm extends React.Component {
             change: "",
             promise: "",
             order: "",
+            help: "",
             cristhian: {
                 c1: {
                     name: '',

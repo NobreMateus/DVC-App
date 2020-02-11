@@ -10,6 +10,7 @@ export async function addDVCForm( state, formId ){
             change: state['change'] , 
             promise: state['promise'], 
             order: state['order'], 
+            help: state['help'],
             cristhian: {
                 c1:{
                     name: state['cristhian']['c1']['name'],
@@ -82,7 +83,6 @@ export async function getDVCData(){
 }
 
 export async function googleLogin(){
-    console.log("TESTEI");
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
     // firebase.auth().signInWithPopup(provider).then(function(result) {

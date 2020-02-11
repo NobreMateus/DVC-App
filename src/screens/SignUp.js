@@ -31,7 +31,7 @@ export default class SignUp extends React.Component {
                     <Input value={this.state['senha']} secureTextEntry={true} onChange={ev => this.setState({ senha: ev.nativeEvent.text })} placeholder="Senha" style={styles.inputStyle} />
                     <Input value={this.state['confirmsenha']} secureTextEntry={true} onChange={ev => this.setState({ confirmsenha: ev.nativeEvent.text })} placeholder="Confirmar Senha" style={styles.inputStyle} />
                     <TouchableOpacity style={styles.buttonStyle} onPress={() => this.signupButtonFunction()} ><Text style={{ color: "#fff" }}>CADASTRAR</Text></TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} ><Text style={styles.signupText} >Voltar</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()} ><Text style={styles.signupText} >Voltar</Text></TouchableOpacity>
                 </View>
             </View>
         )
@@ -44,10 +44,10 @@ export default class SignUp extends React.Component {
         if (this.state['senha'] == this.state['confirmsenha'] && this.state['senha'].length>=6  ) {
             try {
                 let user = await firebaseService.createUser(this.state['email'], this.state['senha']);
-                this.props.navigation.navigate("noAuth");
+                // await firebaseService.logout();
+                // this.props.navigation.goBack();
                 // if(user){
-                await firebaseService.logout();
-                alert("Conta criada com sucesso!");
+                alert("Conta criada com sucesso! Seja bem-vindo ao DVC App");
                 // await firebaseService.sendEmailVer();
                 // }
             } catch (e) {

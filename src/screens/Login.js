@@ -68,7 +68,7 @@ class Login extends React.Component {
       // let data = await firebaseService.getDVCData();
       // this.props.setData({...data});
 
-      this.props.navigation.navigate('Principal');
+      // this.props.navigation.navigate('Principal');
     }
     
     this.setState({

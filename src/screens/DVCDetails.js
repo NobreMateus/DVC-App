@@ -21,6 +21,7 @@ class DVCDetails extends React.Component {
             change: "",
             promise: "",
             order: "",
+            help: "",
             cristhian: {
                 c1: {
                     name: '',
@@ -71,10 +72,10 @@ class DVCDetails extends React.Component {
 
     _scrollToInput(reactNode) {
         // Add a 'scroll' ref to your ScrollView
-        this.scroll.props.scrollToFocusedInput(reactNode, 220)
+        this.scroll.props.scrollToFocusedInput(reactNode, 190)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log(this.props.navigation.state.params.key);
         this.setState({
             ...this.props['data']['forms'][this.props.navigation.state.params.key],
@@ -131,7 +132,7 @@ class DVCDetails extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>Mateus 28.18-20</Text>. O que Jesus promete?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>Mateus 28.18-20</Text>. O que Jesus está ensinando aqui? E o que ele promete?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['promise']} onChangeText={t => this.setState({ promise: t })} disabled={!this.state['editMode']} />
                             <Text ><Text style={{ color: "#ff8745" }}>Ir</Text> - Ganhar</Text>
                             <Text ><Text style={{ color: "#ff8745" }}>Fazer discípulos</Text> - Edificar</Text>
@@ -139,7 +140,7 @@ class DVCDetails extends React.Component {
                         </View>
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>2 Timóteo 2.2</Text>. O que Paulo está dizendo?</Label>
+                            <Label style={styles.labelStyle}>Leia <Text style={{ color: "#ff8745" }}>2 Timóteo 2.2</Text>. De acordo com Paulo, em que tipo de pessoas nós devemos investir?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['order']} onChangeText={t => this.setState({ order: t })} disabled={!this.state['editMode']} />
                         </View>
 
@@ -181,11 +182,17 @@ class DVCDetails extends React.Component {
                                     this._scrollToInput(event.target)
                                 }} style={styles.textInput} value={this.state['ncristhian']['c5']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c5: { name: t, done: this.state['ncristhian']['c5']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
+
+                            <View style={{ ...styles.input }} >
+                                <Label style={styles.labelStyle}>Como podemos te ajudar? Do que você precisa?</Label>
+                                <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['help']} onChangeText={t => this.setState({ help: t })} disabled={!this.state['editMode']} />
+                            </View>
+
                         </View>
 
                         {this.state['editMode'] ?
                             <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Salvar </Text></TouchableOpacity>
-                            : 
+                            :
                             <TouchableOpacity primary onPress={() => { this.enableEditForm() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Editar </Text></TouchableOpacity>
                         }
 
@@ -206,59 +213,60 @@ class DVCDetails extends React.Component {
             change: this.state['change'],
             promise: this.state['promise'],
             order: this.state['order'],
+            help: this.state['help'],
             cristhian: {
                 c1: {
                     name: this.state['cristhian']['c1']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c1']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['cristhian']['c1']['done'] : false
                 },
                 c2: {
                     name: this.state['cristhian']['c2']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c2']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['cristhian']['c2']['done'] : false
                 },
                 c3: {
                     name: this.state['cristhian']['c3']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c3']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['cristhian']['c3']['done'] : false
                 },
                 c4: {
                     name: this.state['cristhian']['c4']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c4']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['cristhian']['c4']['done'] : false
                 },
                 c5: {
                     name: this.state['cristhian']['c5']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['cristhian']['c5']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['cristhian']['c5']['done'] : false
                 },
-            },    
+            },
             ncristhian: {
                 c1: {
                     name: this.state['ncristhian']['c1']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c1']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['ncristhian']['c1']['done'] : false
                 },
                 c2: {
                     name: this.state['ncristhian']['c2']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c2']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['ncristhian']['c2']['done'] : false
                 },
                 c3: {
                     name: this.state['ncristhian']['c3']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c3']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['ncristhian']['c3']['done'] : false
                 },
                 c4: {
                     name: this.state['ncristhian']['c4']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c4']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['ncristhian']['c4']['done'] : false
                 },
                 c5: {
                     name: this.state['ncristhian']['c5']['name'],
-                    done: this.props.data['ncristhian']?this.props.data['ncristhian']['c5']['done']:false
+                    done: this.props.data['ncristhian'] ? this.props.data['ncristhian']['c5']['done'] : false
                 },
             },
             formId: this.props.navigation.state.params.key,
         })
 
-        try{
+        try {
             await firebaseServices.addDVCForm(this.state, this.props.navigation.state.params.key);
-        }catch(e){
+        } catch (e) {
             alert(e)
         }
-    
+
         // await this.setState({
         //     editMode: true,
         //     name: "",

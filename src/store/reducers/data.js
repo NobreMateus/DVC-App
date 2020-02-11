@@ -19,6 +19,7 @@ const reducer = (state = initialState, action) => {
                         change: action.payload.change,
                         promise: action.payload.promise,
                         order: action.payload.order,
+                        help: action.payload.help,
                         cristhian: action.payload.cristhian,
                         ncristhian: action.payload.ncristhian,
                     }
