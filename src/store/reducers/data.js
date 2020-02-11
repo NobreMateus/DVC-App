@@ -1,4 +1,4 @@
-import { USER_DATA, START_DATA } from '../actions/actionTypes';
+import { USER_DATA, START_DATA, RESET_DATA } from '../actions/actionTypes';
 
 const initialState = {
    forms:{}
@@ -29,6 +29,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
             }
+        
+        case RESET_DATA:
+            return {
+                ...initialState
+            }
+
         default:
             return state
     }

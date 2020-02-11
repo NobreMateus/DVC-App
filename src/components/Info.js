@@ -2,8 +2,10 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
 import { Container, Text, Icon, Content } from 'native-base';
 import * as firebaseServices from '../services/firebaseServices';
+import { connect } from 'react-redux';
+import { resetData } from '../store/actions/data';
 
-export default class Info extends React.Component {
+class Info extends React.Component {
 
     render() {
         return (
@@ -55,6 +57,7 @@ Caso ela não conheça ninguém, simplesmente agradeça pela sua atenção e con
                 {
                     text: 'Sim', onPress: async () => {
                         await firebaseServices.logout();
+                        this.props.resetData();
                         this.props.navigate('Login');
                     }
                 },
@@ -67,6 +70,14 @@ Caso ela não conheça ninguém, simplesmente agradeça pela sua atenção e con
 
 
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        resetData: () => dispatch(resetData())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Info);
 
 
 

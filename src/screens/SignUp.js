@@ -44,10 +44,11 @@ export default class SignUp extends React.Component {
         if (this.state['senha'] == this.state['confirmsenha'] && this.state['senha'].length>=6  ) {
             try {
                 let user = await firebaseService.createUser(this.state['email'], this.state['senha']);
+                this.props.navigation.navigate("noAuth");
                 // if(user){
+                await firebaseService.logout();
                 alert("Conta criada com sucesso!");
                 // await firebaseService.sendEmailVer();
-                this.props.navigation.navigate('Login');
                 // }
             } catch (e) {
                 alert(e);

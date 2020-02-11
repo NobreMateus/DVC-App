@@ -1,4 +1,4 @@
-import { USER_DATA, START_DATA } from './actionTypes';
+import { USER_DATA, START_DATA, RESET_DATA} from './actionTypes';
 
 export const setData = data => {
     return {
@@ -11,5 +11,11 @@ export const setStartData = data => {
     return {
         type: START_DATA,
         payload: data
+    }
+}
+
+export const resetData = () =>{
+    return {
+        type: RESET_DATA
     }
 }

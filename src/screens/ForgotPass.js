@@ -29,7 +29,7 @@ class ForgotPass extends React.Component {
         <View style={styles.loginArea} >
           <Input value={this.state['email']} autoCapitalize="none" onChange={ev=> this.setState({email: ev.nativeEvent.text}) } placeholder="E-mail Cadastrado" style={styles.inputStyle} />
           <TouchableOpacity style={styles.buttonStyle} onPress={() => this.sendButtonFunction() } ><Text style={{ color: "#fff" }}>Enviar</Text></TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}><Text style={styles.backText}>Voltar</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}><Text style={styles.backText}>Voltar</Text></TouchableOpacity>
         </View>
       </View>
     )
