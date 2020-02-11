@@ -54,7 +54,7 @@ export const AppNavigator = createStackNavigator(
    
 );
 
-export const configRoute = {
+export const LoginNavigator = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions:{
@@ -84,6 +84,47 @@ export const configRoute = {
     },
   
   },
+
+  
+
+}, {
+  initialRouteName: 'Login',
+}
+)
+
+
+export const configRoute = {
+  
+  noAuth: LoginNavigator,
+  // Login: {
+  //   screen: Login,
+  //   navigationOptions:{
+  //     headerShown: false,
+  //   },
+    
+  // },
+
+  // SignUp:{
+  //   screen: SignUp,
+  //   navigationOptions:{
+  //     headerShown: false,
+  //   },
+  // },
+
+  // ForgotPass:{
+  //   screen: ForgotPass,
+  //   navigationOptions:{
+  //     headerShown: false,
+  //   },
+  // },
+  
+  Auth: {
+    screen: Auth,
+    navigationOptions:{
+      headerShown: false,
+    },
+  },
+  
   Logged: AppNavigator  
 
 

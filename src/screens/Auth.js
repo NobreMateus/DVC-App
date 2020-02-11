@@ -37,7 +37,7 @@ class Auth extends React.Component {
     //     this.props.navigation.navigate('Login');
     //   }
         firebase.auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'Principal' : 'Login')
+            this.props.navigation.navigate(user ? 'Principal' : 'noAuth')
         })
     } catch (error) {
       console.log("Something went wrong", error);

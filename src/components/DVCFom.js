@@ -106,6 +106,9 @@ class DVCForm extends React.Component {
                         this.scroll = ref
                     }}>
                     <Form style={{ ...styles.form, marginTop: 15 }}>
+                        <Text style={styles.principalText}>
+                            Adicione um novo DVC
+                        </Text>
 
                         {this.state['editMode'] ? null :
                             <TouchableOpacity onPress={() => this.enableEditForm()} style={styles.editButton}><Icon name='create' style={{ color: "#FFF" }} /></TouchableOpacity>}
@@ -405,5 +408,10 @@ const styles = StyleSheet.create({
         padding: 5,
         width: 60,
         marginBottom: 10,
-    }
+    },
+    principalText: {
+        color: "#4f4f4f",
+        fontSize: 20,
+        marginBottom: 10
+    },
 });

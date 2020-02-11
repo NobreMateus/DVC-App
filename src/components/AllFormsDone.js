@@ -30,7 +30,7 @@ class AllFormsDone extends React.Component {
                         <View style={styles.menu}>
                             <Text style={styles.principalText}>
                                 Todos os DVC já preenchidos
-              </Text>
+                            </Text>
                         </View>
                         {this.getAllFormsIds().map((c, n) => {
                             let thisForm = this.props['data']['forms'][c]
