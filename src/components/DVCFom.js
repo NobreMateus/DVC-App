@@ -258,9 +258,6 @@ class DVCForm extends React.Component {
             formId: formId,
         })
 
-        console.log("Olhe State Aqui:")
-        console.log(this.state);
-
         try{
             await firebaseServices.addDVCForm(this.state, formId);
         }catch(e){
@@ -279,35 +276,45 @@ class DVCForm extends React.Component {
             cristhian: {
                 c1: {
                     name: '',
+                    done: false
                 },
                 c2: {
                     name: '',
+                    done: false
                 },
                 c3: {
                     name: '',
+                    done: false
                 },
                 c4: {
                     name: '',
+                    done: false
                 },
                 c5: {
                     name: '',
+                    done: false
                 },
             },
             ncristhian: {
                 c1: {
                     name: '',
+                    done: false
                 },
                 c2: {
                     name: '',
+                    done: false
                 },
                 c3: {
                     name: '',
+                    done: false
                 },
                 c4: {
                     name: '',
+                    done: false
                 },
                 c5: {
                     name: '',
+                    done: false
                 },
             },
         })

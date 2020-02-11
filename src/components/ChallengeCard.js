@@ -11,7 +11,12 @@ export default class ChallengeCard extends React.Component {
         return (
           <View style={styles.container} >
             <View style={styles.cardContainer}>
-                <Text style={styles.text}>{this.props.text}</Text> 
+                <Text style={styles.title}>{this.props.name}</Text>
+                <View style={styles.subContainer}>
+                  <Text style={styles.subtitle}>{this.props.university} - {this.props.phone} </Text> 
+                  {/* <Text> - </Text>
+                  <Text> {this.props.phone} </Text> */}
+                </View>
                 {/* <View style ={ this.props.checked?styles.checked:styles.noChecked }></View> */}
             </View> 
           </View>
@@ -24,16 +29,19 @@ const styles = StyleSheet.create({
       flex:1, 
       justifyContent :"center",
       paddingHorizontal: 15,  
-      height: 100,
+      height: 90,
       backgroundColor: "#fff",
       //marginBottom:5,
-      borderRadius: 5
+      borderRadius: 20
     },
-    text: {
-      fontSize: 16,
+    title: {
+      fontSize: 20,
       color:"#000",
-      
-      
+    },
+    subtitle: {
+      fontSize: 16,
+      // color:"#000",
+      color: "#696969"
     },
     checked:{
       height:25,
@@ -50,8 +58,13 @@ const styles = StyleSheet.create({
 
     },
     cardContainer:{
+    //   flexDirection: 'row',
+    // justifyContent: 'space-between',  
+    },
+    subContainer:{
       flexDirection: 'row',
-    justifyContent: 'space-between',  
+      alignItems:"center",
+      color: "#A9A9A9"
     }
 
   });

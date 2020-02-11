@@ -4,6 +4,7 @@ import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-bas
 import DVCForm from '../components/DVCFom';
 import Challenges from '../components/Challenges';
 import Info from '../components/Info';
+import AllFormsDone from '../components/AllFormsDone';
 import NoDVCData from '../components/NoDVCData'
 import * as firebaseServices from '../services/firebaseServices'
 import { setData, setStartData } from '../store/actions/data';
@@ -33,9 +34,9 @@ class Principal extends React.Component {
             <DVCForm />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            {false?<Challenges /> : <NoDVCData />}
+            <AllFormsDone />
           </Tab>
-          <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Informações</Text></TabHeading>}>
+          <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Instruções</Text></TabHeading>}>
             <Info navigate={this.props.navigation.navigate} />
           </Tab>
         </Tabs>
