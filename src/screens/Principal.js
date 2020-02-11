@@ -34,7 +34,7 @@ class Principal extends React.Component {
             <DVCForm />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            <AllFormsDone />
+            <AllFormsDone navigate={this.props.navigation.navigate} />
           </Tab>
           <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Instruções</Text></TabHeading>}>
             <Info navigate={this.props.navigation.navigate} />
@@ -43,6 +43,7 @@ class Principal extends React.Component {
       </Container>
     )
   }
+
 }
 
 const mapStateToProps = ({data}) => {

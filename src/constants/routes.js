@@ -6,6 +6,7 @@ import SignUp from '../screens/SignUp';
 import ForgotPass from '../screens/ForgotPass';
 import LogoutButton from '../components/LogoutButton';
 import Auth from '../screens/Auth';
+import DVCDetails from '../screens/DVCDetails';
 import { Icon, Button} from 'native-base';
 
 export const AppNavigator = createStackNavigator(
@@ -14,6 +15,7 @@ export const AppNavigator = createStackNavigator(
       screen: Principal,
       navigationOptions:{
         headerShown: true,
+        headerTitle: "DVC App",
         headerLeft: null,
         // headerRight: <LogoutButton />,
         headerTitleStyle:{
@@ -30,6 +32,19 @@ export const AppNavigator = createStackNavigator(
       navigationOptions:{
         headerShown: false,
       },
+    },
+    DVCDetails:{
+      screen: DVCDetails,
+      navigationOptions:{
+        headerTitle: "Detalhes",
+        headerTitleStyle:{
+          color:"#fff",
+        },
+        headerStyle:{
+          backgroundColor: '#ff8745',
+          elevation: 0,
+        }
+      }
     }
   }, 
 

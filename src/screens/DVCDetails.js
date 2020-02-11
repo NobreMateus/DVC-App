@@ -8,12 +8,12 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { connect } from 'react-redux';
 import { setData } from '../store/actions/data';
 
-class DVCForm extends React.Component {
+class DVCDetails extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            editMode: true,
+            editMode: false,
             name: "",
             phone: "",
             university: "",
@@ -65,7 +65,7 @@ class DVCForm extends React.Component {
                     done: false
                 },
             },
-            spinner: false,
+            spinner: true,
         }
     }
 
@@ -74,23 +74,12 @@ class DVCForm extends React.Component {
         this.scroll.props.scrollToFocusedInput(reactNode, 220)
     }
 
-    async componentDidMount() {
+    componentDidMount(){
+        console.log(this.props.navigation.state.params.key);
         this.setState({
-            spinner: true
-        });
-
-        if (await firebaseServices.DVCIsReady()) {
-            this.setState({
-                //...this.props.data,
-                editMode: true,
-                spinner: false
-            })
-        } else {
-            this.setState({
-                spinner: false
-            })
-        }
-
+            ...this.props['data']['forms'][this.props.navigation.state.params.key],
+            spinner: false,
+        })
     }
 
     render() {
@@ -129,9 +118,15 @@ class DVCForm extends React.Component {
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['university']} onChangeText={t => this.setState({ university: t })} disabled={!this.state['editMode']} />
                         </View>
 
+                        {/* <View style={styles.input} >
+                            <Label style={styles.labelStyle}>Qual é a sua visão?</Label>
+                            <Textarea onFocus={(event) => {
+                                this._scrollToInput(event.target)
+                            }} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['vision']} onChangeText={t => this.setState({ vision: t })} disabled={!this.state['editMode']} />
+                        </View> */}
 
                         <View style={styles.input} >
-                            <Label style={styles.labelStyle}>Qual é a sua visão? Qual a mudança você deseja ver no seu Campus?</Label>
+                            <Label style={styles.labelStyle}>Qual sua visão? Qual a mudança você deseja ver no seu Campus?</Label>
                             <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} value={this.state['change']} onChangeText={t => this.setState({ change: t })} disabled={!this.state['editMode']} />
                         </View>
 
@@ -189,8 +184,10 @@ class DVCForm extends React.Component {
                         </View>
 
                         {this.state['editMode'] ?
-                            <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Adicionar </Text></TouchableOpacity>
-                            : null}
+                            <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Salvar </Text></TouchableOpacity>
+                            : 
+                            <TouchableOpacity primary onPress={() => { this.enableEditForm() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Editar </Text></TouchableOpacity>
+                        }
 
                     </Form>
                 </KeyboardAwareScrollView>
@@ -199,7 +196,7 @@ class DVCForm extends React.Component {
     }
 
     async saveData() {
-        let formId = new Date().getTime();
+        // let formId = new Date().getTime();
         await this.setState({ editMode: false });
         await this.props.setData({
             name: this.state['name'],
@@ -253,69 +250,69 @@ class DVCForm extends React.Component {
                     done: this.props.data['ncristhian']?this.props.data['ncristhian']['c5']['done']:false
                 },
             },
-            formId: formId,
+            formId: this.props.navigation.state.params.key,
         })
 
         try{
-            await firebaseServices.addDVCForm(this.state, formId);
+            await firebaseServices.addDVCForm(this.state, this.props.navigation.state.params.key);
         }catch(e){
             alert(e)
         }
     
-        await this.setState({
-            editMode: true,
-            name: "",
-            phone: "",
-            university: "",
-            vision: "",
-            change: "",
-            promise: "",
-            order: "",
-            cristhian: {
-                c1: {
-                    name: '',
-                    done: false
-                },
-                c2: {
-                    name: '',
-                    done: false
-                },
-                c3: {
-                    name: '',
-                    done: false
-                },
-                c4: {
-                    name: '',
-                    done: false
-                },
-                c5: {
-                    name: '',
-                    done: false
-                },
-            },
-            ncristhian: {
-                c1: {
-                    name: '',
-                    done: false
-                },
-                c2: {
-                    name: '',
-                    done: false
-                },
-                c3: {
-                    name: '',
-                    done: false
-                },
-                c4: {
-                    name: '',
-                    done: false
-                },
-                c5: {
-                    name: '',
-                    done: false
-                },
-            },
-        })
+        // await this.setState({
+        //     editMode: true,
+        //     name: "",
+        //     phone: "",
+        //     university: "",
+        //     vision: "",
+        //     change: "",
+        //     promise: "",
+        //     order: "",
+        //     cristhian: {
+        //         c1: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c2: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c3: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c4: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c5: {
+        //             name: '',
+        //             done: false
+        //         },
+        //     },
+        //     ncristhian: {
+        //         c1: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c2: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c3: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c4: {
+        //             name: '',
+        //             done: false
+        //         },
+        //         c5: {
+        //             name: '',
+        //             done: false
+        //         },
+        //     },
+        // })
 
     }
 
@@ -339,7 +336,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DVCForm);
+export default connect(mapStateToProps, mapDispatchToProps)(DVCDetails);
 
 const styles = StyleSheet.create({
     container: {

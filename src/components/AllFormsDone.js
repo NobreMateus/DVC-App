@@ -14,20 +14,13 @@ class AllFormsDone extends React.Component {
         let allFormsIds = [];
         for (let id in this.props['data']['forms']) {
             allFormsIds.push(id);
-            // this.setState({
-            //     formsId: allFormsIds
-            // })
         }
-        return allFormsIds;
+        let thisForm = this.props['data']['forms']
+        let orderArray = allFormsIds.sort((a, b)=>{
+            return (thisForm[a]['name'] > thisForm[b]['name']) ? 1: ((thisForm[b]['name'] > thisForm[a]['name'])? -1 :0);
+        });
+        return orderArray;
     }
-
-    // componentDidMount() {
-    //     this.getAllFormsIds();
-    // }
-
-    // componentDidUpdate() {
-    //     this.getAllFormsIds();
-    // }
 
     render() {
         return (
@@ -42,7 +35,7 @@ class AllFormsDone extends React.Component {
                         {this.getAllFormsIds().map((c, n) => {
                             let thisForm = this.props['data']['forms'][c]
                             return (
-                                <TouchableOpacity key={n} style={{ marginBottom: 15 }} >
+                                <TouchableOpacity key={n} style={{ marginBottom: 15 }} onPress={()=>this.props.navigate('DVCDetails', {key: c})} >
                                     <ChallengeCard name={thisForm['name']} university={thisForm['university']} phone={thisForm['phone']} />
                                 </TouchableOpacity>
                             )
