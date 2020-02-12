@@ -7,7 +7,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { connect } from 'react-redux';
 import { setData } from '../store/actions/data';
-import { cruQuestion } from '../constants/strings';
+import { cruQuestion, challengeStr } from '../constants/strings';
 
 class DVCForm extends React.Component {
 
@@ -157,23 +157,8 @@ class DVCForm extends React.Component {
                             <Text style={{fontSize:16, color: "#4f4f4f", textAlign: 'auto', marginTop:-20 }} >{cruQuestion}</Text>
                         </View>
 
-                        <View style={styles.input} >
-                            <Label style={{ ...styles.labelStyle, ...styles.input }}>Liste 5 cristãos para fazerem o DVC:</Label>
-                            <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c1']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: { name: t, done: this.state['ncristhian']['c1']['done'] } } })} disabled={!this.state['editMode']} />
-                            </View>
-                            <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c2']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c2: { name: t, done: this.state['ncristhian']['c2']['done'] } } })} disabled={!this.state['editMode']} />
-                            </View>
-                            <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c3']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c3: { name: t, done: this.state['ncristhian']['c3']['done'] } } })} disabled={!this.state['editMode']} />
-                            </View>
-                            <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c4']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c4: { name: t, done: this.state['ncristhian']['c4']['done'] } } })} disabled={!this.state['editMode']} />
-                            </View>
-                            <View style={styles.input}>
-                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c5']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c5: { name: t, done: this.state['ncristhian']['c5']['done'] } } })} disabled={!this.state['editMode']} />
-                            </View>
+                        <View style = {{borderTopWidth:2, borderTopColor:"#fff"}}>
+                            <Text style={{fontSize:16, color: "#4f4f4f", textAlign: 'auto', marginTop: 0,  }}  >{challengeStr}</Text>
                         </View>
 
                         <View style={styles.input} >
@@ -194,6 +179,25 @@ class DVCForm extends React.Component {
                                 <Input onFocus={(event) => {
                                     this._scrollToInput(event.target)
                                 }} style={styles.textInput} value={this.state['ncristhian']['c5']['name']} onChangeText={t => this.setState({ ncristhian: { ...this.state['ncristhian'], c5: { name: t, done: this.state['ncristhian']['c5']['done'] } } })} disabled={!this.state['editMode']} />
+                            </View>
+                        </View>
+
+                        <View style={styles.input} >
+                            <Label style={{ ...styles.labelStyle, ...styles.input }}>Liste 5 cristãos para fazerem o DVC:</Label>
+                            <View style={styles.input}>
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c1']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c1: { name: t, done: this.state['ncristhian']['c1']['done'] } } })} disabled={!this.state['editMode']} />
+                            </View>
+                            <View style={styles.input}>
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c2']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c2: { name: t, done: this.state['ncristhian']['c2']['done'] } } })} disabled={!this.state['editMode']} />
+                            </View>
+                            <View style={styles.input}>
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c3']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c3: { name: t, done: this.state['ncristhian']['c3']['done'] } } })} disabled={!this.state['editMode']} />
+                            </View>
+                            <View style={styles.input}>
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c4']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c4: { name: t, done: this.state['ncristhian']['c4']['done'] } } })} disabled={!this.state['editMode']} />
+                            </View>
+                            <View style={styles.input}>
+                                <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput} value={this.state['cristhian']['c5']['name']} onChangeText={t => this.setState({ cristhian: { ...this.state['cristhian'], c5: { name: t, done: this.state['ncristhian']['c5']['done'] } } })} disabled={!this.state['editMode']} />
                             </View>
                         </View>
 
