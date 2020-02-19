@@ -56,7 +56,12 @@ export async function addDVCForm( state, formId ){
                     done: state['ncristhian']['c5']['done']
                 },
             },
-            firstTime: false
+            firstTime: false,
+            cityState: state['cityState'],
+            needs: state['needs'],
+            jesus: state['jesus'],
+            commission: state['commission'],
+            accept: state['accept'],
         }
     )
 }

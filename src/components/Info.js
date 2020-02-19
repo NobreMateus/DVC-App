@@ -13,27 +13,33 @@ class Info extends React.Component {
                 <Content style={{paddingHorizontal:15}}>
                     
                     <Text style={styles.text}>
-                        {`Bem-vindo ao DVC App!
-                        
+                        {`
+Bem-vindo ao DVC App!
+
 O Desafio do Voluntário-Chave é uma forma de mostrar ao estudante cristão como ele pode ser um discípulo multiplicador ou (como nós chamamos) um voluntário-chave.
 
 O DVC é simples e fácil de compartilhar com outros.
 
-O objetivo é trazer à tona a visão que Deus tem dado ao estudante para seu campus, encorajando-o e equipando-o para dar passos de fé.
+O objetivo é descobrir a visão que Deus tem dado ao estudante para seu campus, encorajando-o e equipando-o para dar passos de fé.
 
-Você pode compartilhar esse desafio com um estudante que acabou de receber a Cristo ou com um estudante que já é cristão - na universidade, na igreja ou em um evento cristão.
+Você pode compartilhar esse desafio com um estudante que acabou de receber a Cristo ou com um estudante que já é cristão - na universidade, na igreja ou em qualquer lugar.
 
 SUGESTÕES DE COMO INICIAR UMA CONVERSA
 
-Você pode começar falando algo assim:
+Você pode começar falando quem você é e também quem você está procurando:
 
-- Olá, meu nome é Lucas, faço parte da Cru Campus, um movimento que ajuda estudantes a desenvolverem um relacionamento com Deus através do evangelismo e do discipulado. Durante esses dias, estamos procurando outros estudantes cristãos evangélicos que gostariam de conhecer mais o nosso movimento. Você é evangélico? (Se for numa igreja ou evento cristão, troque por "Você é universitário"?).
+- Olá, meu nome é Lucas e eu faço parte da Cru Campus, um movimento que tem o objetivo de compartilhar o evangelho com cada estudante. Durante esses dias, estamos procurando estudantes evangélicos que gostariam de conhecer mais o nosso movimento. Você é evangélico? (Se for numa igreja ou evento cristão, troque por "Você é universitário"?).
 
-Se a resposta for positiva, pergunte se a pessoa tem um tempo para conversar e então faça o Desafio do Voluntário-Chave.
+Se a resposta for positiva, você pode falar algo como:
+
+- Você quer que os estudantes do seu campus conheçam Jesus? A gente pode te ajudar nisso. A Cru tem vários recursos específicos para alcançar estudantes! O que você acha da ideia de compartilhar a sua fé no campus? Isso é algo que te interessa?
+
+Espere a resposta do estudante. Se ele disser que sim, diga: "Eu quero agora te explicar algo bem interessante."
 
 Se a resposta for negativa, pergunte se a pessoa conhece algum estudante cristão e se poderia lhe apresentar.
 
-Caso ela não conheça ninguém, simplesmente agradeça pela sua atenção e continue procurando voluntários-chave.`}
+Caso ela não conheça ninguém, simplesmente agradeça pela sua atenção e continue procurando voluntários-chave.
+`}
                     </Text>
                     <View style={{alignItems:"center"}}>
                         <TouchableOpacity style={styles.logoutButton} onPress={() => this.logoutFunction()}>

@@ -22,6 +22,11 @@ const reducer = (state = initialState, action) => {
                         help: action.payload.help,
                         cristhian: action.payload.cristhian,
                         ncristhian: action.payload.ncristhian,
+                        cityState: action.payload.cityState,
+                        needs: action.payload.needs,
+                        jesus: action.payload.jesus,
+                        commission: action.payload.commission,
+                        accept: action.payload.accept,
                     }
                 }
         }
