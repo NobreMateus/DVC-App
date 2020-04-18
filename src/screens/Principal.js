@@ -13,7 +13,7 @@ import Modal from 'react-native-modal';
 
 class Principal extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       isModalVisible: false,
@@ -21,14 +21,14 @@ class Principal extends React.Component {
   }
 
 
-  logoutFunction(){
+  logoutFunction() {
     this.props.navigation.navigate('Login');
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     let data = await firebaseServices.getDVCData();
 
-    await this.props.setStartData({...data});
+    await this.props.setStartData({ ...data });
   }
 
   toggleModal = () => {
@@ -36,26 +36,14 @@ class Principal extends React.Component {
   };
 
   logout = () => {
-    firebaseServices.logout();  
+    firebaseServices.logout();
   };
 
   render() {
-    // console.log(this.state);
-    // console.log("RENDER")
     return (
-      <Container style={styles.container}>
-        {/* <Tabs>
-          <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>DVC</Text></TabHeading>} >
-            <DVCForm />
-          </Tab>
-          <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Desafios</Text></TabHeading>}>
-            <AllFormsDone navigate={this.props.navigation.navigate} />
-          </Tab>
-          <Tab heading={<TabHeading style={styles.tabStyle}><Text style={styles.textTabStyle}>Instruções</Text></TabHeading>}>
-            <Info navigate={this.props.navigation.navigate} />
-          </Tab>
-        </Tabs> */}
-        <Header>
+      <Container>
+
+        <Header style={{ backgroundColor: "#045066" }}>
           <Left>
             <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
               <Icon name='menu' />
@@ -65,21 +53,31 @@ class Principal extends React.Component {
             <Text>Header</Text>
           </Body>
         </Header>
-        <View style={styles.estatsAreas}>
-          <Text>Estatistica</Text>
-          <Button onPress={() => this.toggleModal()} >
-            <Text>Adicionar Novo DVC</Text>
-          </Button>
-          <Button onPress={() => this.logout()} >
-            <Text>Fazer Logout</Text>
-          </Button>
-        </View>
+
+        <Container style={styles.container}>
+          <View style={styles.principalArea}>
+            <View style={styles.statsArea}>
+              <Text style={{ fontSize: 48 }} >4</Text>
+              <Text style={{ fontSize: 14, textAlign: "center" }}>{`DVC\nPreenchidos`}</Text>
+            </View>
+
+            <Button
+              onPress={() => this.props.navigation.navigate('Adicionar DVC')}
+              style={styles.mainButton}>
+              <Text style={{ color: "#fff" }} >Adicionar Novo DVC</Text>
+            </Button>
+
+            <View style={{ width: "100%" }}>
+              <Text style={styles.dvcHeader} >DVC Preenchidos</Text>
+            </View>
+          </View>
+        </Container>
         <View style={styles.dvcsArea}>
           <AllFormsDone></AllFormsDone>
         </View>
-        <Modal isVisible={this.state.isModalVisible}
+        {/* <Modal isVisible={this.state.isModalVisible}
           testID={'modal'}
-          onSwipeComplete={this.close}
+          onSwipeComplete={this.close}  
           swipeDirection={['down']}
           style={styles.view}
           onBackdropPress={()=>this.setState({isModalVisible:false})}
@@ -88,14 +86,15 @@ class Principal extends React.Component {
             <Text style={styles.contentTitle}>Hi 👋!</Text>
             <Button testID={'close-button'} title="Close" />
           </View>
-        </Modal>
+        </Modal> */}
+
       </Container>
     )
   }
 
 }
 
-const mapStateToProps = ({data}) => {
+const mapStateToProps = ({ data }) => {
   return {
     data: data
   }
@@ -104,7 +103,7 @@ const mapStateToProps = ({data}) => {
 const mapDispatchToProps = dispatch => {
   return {
     setStartData: data => dispatch(setStartData(data))
-  }  
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Principal)
@@ -112,28 +111,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(Principal)
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: '#a8c5c8',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    paddingHorizontal: 15
   },
-
-  tabStyle: {
-    backgroundColor: "#f8a26c"
-  },
-  textTabStyle: {
-    color: "#fff"
-  },
-
-  estatsAreas: {
-    backgroundColor: "red",
+  principalArea: {
+    backgroundColor: "#fff",
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
 
   dvcsArea: {
-    flex: 2
+    flex: 1
   },
   view: {
     justifyContent: 'flex-end',
@@ -151,6 +139,55 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 12,
   },
+
+  mainButton: {
+    height: 40,
+    backgroundColor: "#EE6352",
+    borderRadius: 5,
+    width: "100%",
+    justifyContent: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+
+    elevation: 8,
+  },
+  dvcHeader: {
+    // height: 30,
+    fontSize: 20,
+    width: "100%",
+    alignSelf: "flex-start",
+    paddingBottom: 5,
+    borderColor: "#C4C4C4",
+    borderBottomWidth: 2,
+    marginBottom: 20,
+    fontWeight: "bold"
+  },
+  statsArea: {
+    marginTop: 25,
+    height: 128,
+    width: 128,
+    borderColor: "#000",
+    borderRadius: 15,
+    borderWidth: 2,
+    backgroundColor:"#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#045066",
+    shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: .25,
+        shadowRadius: 0,
+
+        elevation: 6,
+  }
 
 
 });

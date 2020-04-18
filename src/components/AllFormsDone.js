@@ -16,8 +16,8 @@ class AllFormsDone extends React.Component {
             allFormsIds.push(id);
         }
         let thisForm = this.props['data']['forms']
-        let orderArray = allFormsIds.sort((a, b)=>{
-            return (thisForm[a]['name'] > thisForm[b]['name']) ? 1: ((thisForm[b]['name'] > thisForm[a]['name'])? -1 :0);
+        let orderArray = allFormsIds.sort((a, b) => {
+            return (thisForm[a]['name'] > thisForm[b]['name']) ? 1 : ((thisForm[b]['name'] > thisForm[a]['name']) ? -1 : 0);
         });
         return orderArray;
     }
@@ -27,15 +27,10 @@ class AllFormsDone extends React.Component {
             <Container style={styles.container}>
                 <Content >
                     <View style={styles.checks}>
-                        <View style={styles.menu}>
-                            <Text style={styles.principalText}>
-                                Todos os DVC já preenchidos
-                            </Text>
-                        </View>
                         {this.getAllFormsIds().map((c, n) => {
                             let thisForm = this.props['data']['forms'][c]
                             return (
-                                <TouchableOpacity key={n} style={{ marginBottom: 15 }} onPress={()=>this.props.navigate('DVCDetails', {key: c})} >
+                                <TouchableOpacity key={n} style={styles.card} onPress={() => this.props.navigate('DVCDetails', { key: c })} >
                                     <ChallengeCard name={thisForm['name']} university={thisForm['university']} phone={thisForm['phone']} />
                                 </TouchableOpacity>
                             )
@@ -68,12 +63,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(AllFormsDone);
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        backgroundColor: '#a8c5c8',
+        // backgroundColor: '#a8c5c8',
         // alignItems: 'center',
         // justifyContent: 'center',
     },
     checks: {
-        marginHorizontal: "5%"
+        marginHorizontal: 15
     },
     menu: {
         flex: 1,
@@ -92,5 +87,19 @@ const styles = StyleSheet.create({
         color: "#527376",
         fontSize: 30,
         fontWeight: 'bold',
+    },
+    card: {
+        backgroundColor: "#F4F4F4",
+        marginBottom: 8,
+        borderRadius: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: .25,
+        shadowRadius: 0,
+
+        elevation: 4,
     }
 });
