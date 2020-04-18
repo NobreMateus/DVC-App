@@ -35,6 +35,10 @@ class Principal extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
+  logout = () => {
+    firebaseServices.logout();  
+  };
+
   render() {
     // console.log(this.state);
     // console.log("RENDER")
@@ -65,6 +69,9 @@ class Principal extends React.Component {
           <Text>Estatistica</Text>
           <Button onPress={() => this.toggleModal()} >
             <Text>Adicionar Novo DVC</Text>
+          </Button>
+          <Button onPress={() => this.logout()} >
+            <Text>Fazer Logout</Text>
           </Button>
         </View>
         <View style={styles.dvcsArea}>

@@ -5,48 +5,30 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { setData } from '../store/actions/data';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
+import { Button } from 'native-base';
 
-class Auth extends React.Component {
+export default class Auth extends React.Component {
 
   componentDidMount(){
-    this.getToken();
+    firebase.auth().onAuthStateChanged(user=>{
+      this.props.navigation.navigate(user ? 'Main':'Login')
+    })
   }
 
   render(){
     return (
-      <View>
-        
+      <View style={styles.container}>
+        <Text>Loading...</Text>
       </View>
     )
   }
 
-  async getToken(user) {
-    try {
-    //   let userData = await AsyncStorage.getItem("userData");
-    //   let data = JSON.parse(userData);
-    //   console.log("AQUII")
-    //   console.log(data);
-    //   console.log("ATE AQUIII") 
-    //   if(data){
-    //       // await firebase.auth().updateCurrentUser(data.accessToken);
-    //       await firebase.auth().signInWithCustomToken(data['stsTokenManager'].accessToken)
-    //       this.props.navigation.navigate('Logged');
-    //     console.log("TENTEI AQUI")
-    //   }else{
-    //     this.props.navigation.navigate('Login');
-    //   }
-        // let user =  firebase.auth().currentUser;
-        // this.props.navigation.navigate(user ? 'Principal' : 'noAuth');
-        firebase.auth().onAuthStateChanged(user => {
-          this.props.navigation.navigate(user ? 'Principal' : 'noAuth')
-        })
-    } catch (error) {
-      console.log("Something went wrong", error);
-    }
-  }
-
-
 }
 
-
-export default Auth;
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center'
+  }
+})
