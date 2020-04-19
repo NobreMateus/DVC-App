@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
     },
     checks: {
-        marginHorizontal: 15
+        marginHorizontal: "4%"
     },
     menu: {
         flex: 1,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: "#F4F4F4",
-        marginBottom: 8,
+        marginBottom: "2%",
         borderRadius: 15,
         shadowColor: "#000",
         shadowOffset: {

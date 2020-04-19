@@ -111,30 +111,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(Principal)
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 15
+    paddingHorizontal: "4%"
   },
   principalArea: {
     backgroundColor: "#fff",
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'center'
   },
 
   dvcsArea: {
-    flex: 1
+    flex: 1,
+    paddingHorizontal:0
   },
   view: {
     justifyContent: 'flex-end',
     margin: 0,
   },
-  content: {
-    backgroundColor: 'white',
-    padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
+
   contentTitle: {
     fontSize: 20,
     marginBottom: 12,
@@ -158,17 +152,19 @@ const styles = StyleSheet.create({
   },
   dvcHeader: {
     // height: 30,
+    marginTop:"6%",
     fontSize: 20,
     width: "100%",
     alignSelf: "flex-start",
-    paddingBottom: 5,
+    paddingBottom: "1%",
     borderColor: "#C4C4C4",
     borderBottomWidth: 2,
-    marginBottom: 20,
+    marginBottom: 0,
     fontWeight: "bold"
   },
   statsArea: {
-    marginTop: 25,
+    marginTop: "4%",
+    marginBottom: "4%",
     height: 128,
     width: 128,
     borderColor: "#000",
