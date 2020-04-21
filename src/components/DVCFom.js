@@ -79,7 +79,7 @@ class DVCForm extends React.Component {
 
     _scrollToInput(reactNode) {
         // Add a 'scroll' ref to your ScrollView
-        this.scroll.props.scrollToFocusedInput(reactNode, 190)
+        // this.scroll.props.scrollToFocusedInput(reactNode, 190)
     }
 
     async componentDidMount() {
@@ -114,9 +114,6 @@ class DVCForm extends React.Component {
                         this.scroll = ref
                     }}>
                     <Form style={{ ...styles.form, marginTop: 15 }}>
-                        <Text style={styles.principalText}>
-                            Adicione um novo DVC
-                        </Text>
 
                         {this.state['editMode'] ? null :
                             <TouchableOpacity onPress={() => this.enableEditForm()} style={styles.editButton}><Icon name='create' style={{ color: "#FFF" }} /></TouchableOpacity>}
@@ -134,14 +131,14 @@ class DVCForm extends React.Component {
                         <View style={styles.input} >
                             <Label style={styles.labelStyle}>Cidade/Estado</Label>
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput}
-                                value={this.state['cityState']} onChangeText={t => this.setState({ cityState: t })} 
+                                value={this.state['cityState']} onChangeText={t => this.setState({ cityState: t })}
                                 disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.input} >
                             <Label style={styles.labelStyle}>Quais são as maiores necessidades da sua universidade?</Label>
-                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} 
-                                value={this.state['needs']} onChangeText={t => this.setState({ needs: t })} 
+                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput}
+                                value={this.state['needs']} onChangeText={t => this.setState({ needs: t })}
                                 disabled={!this.state['editMode']} />
                         </View>
 
@@ -160,18 +157,18 @@ class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.constsText}>
-                            <Text style={{ fontSize: 16, color: "#4f4f4f", textAlign: 'auto', marginBottom: 0 }}  >{text3}</Text>
+                            <Text style={styles.detailText}  >{text3}</Text>
                         </View>
-                        
+
                         <View style={{ ...styles.input }} >
                             <Label style={styles.labelStyle}>O que Jesus promete para você?</Label>
-                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput} 
-                                value={this.state['jesus']} onChangeText={t => this.setState({ jesus: t })} 
+                            <Textarea onFocus={event => this._scrollToInput(event.target)} rowSpan={5} bordered style={styles.bigTextInput}
+                                value={this.state['jesus']} onChangeText={t => this.setState({ jesus: t })}
                                 disabled={!this.state['editMode']} />
                         </View>
 
                         <View style={styles.constsText}>
-                            <Text style={{ fontSize: 16, color: "#4f4f4f", textAlign: 'auto', marginTop: 0, }}  >{text1}</Text>
+                            <Text style={styles.detailText}  >{text1}</Text>
                         </View>
 
                         <View style={{ ...styles.input }} >
@@ -180,27 +177,24 @@ class DVCForm extends React.Component {
                         </View>
 
                         <View style={styles.constsText}>
-                            <Text style={{ fontSize: 16, color: "#4f4f4f", textAlign: 'auto', marginTop: 0, }}  >{text2}</Text>
+                            <Text style={styles.detailText}  >{text2}</Text>
                         </View>
 
                         <View style={styles.input} >
                             <Label style={styles.labelStyle}>Agora que você entendeu que a Grande Comissão é uma tarefa para todo cristão e que a multiplicação espiritual é a estratégia bíblica para viver isso, você quer se juntar a nós e começar a fazer discípulos no seu campus?</Label>
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput}
-                                value={this.state['commission']} onChangeText={t => this.setState({ commission: t })} 
+                                value={this.state['commission']} onChangeText={t => this.setState({ commission: t })}
                                 disabled={!this.state['editMode']} />
                         </View>
 
-                        {/* <View>
-                            <Text style={{ fontSize: 16, color: "#4f4f4f", textAlign: 'auto', marginTop: -20 }} >{cruQuestion}</Text>
-                        </View> */}
                         <View style={styles.constsText}>
-                            <Text style={{ fontSize: 16, color: "#4f4f4f", textAlign: 'auto', marginTop: 0, }}  >{challengeStr}</Text>
+                            <Text style={styles.detailText}  >{challengeStr}</Text>
                         </View>
 
                         <View style={styles.input} >
                             <Label style={styles.labelStyle}>Você aceita o desafio?</Label>
                             <Input onFocus={event => this._scrollToInput(event.target)} style={styles.textInput}
-                                value={this.state['accept']} onChangeText={t => this.setState({ accept: t })} 
+                                value={this.state['accept']} onChangeText={t => this.setState({ accept: t })}
                                 disabled={!this.state['editMode']} />
                         </View>
 
@@ -261,7 +255,7 @@ class DVCForm extends React.Component {
 
 
                         {this.state['editMode'] ?
-                            <TouchableOpacity primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Adicionar </Text></TouchableOpacity>
+                            <Button primary onPress={() => { this.saveData() }} style={{ ...styles.button, color: "#f8a26c", marginBottom: 200 }}><Text style={styles.textButton} > Adicionar </Text></Button>
                             : null}
 
                     </Form>
@@ -433,11 +427,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // paddingHorizontal: '5%',
-        backgroundColor: '#a8c5c8',
+        backgroundColor: '#fff',
     },
 
     form: {
-        paddingHorizontal: '5%',
+        paddingHorizontal: '4%',
     },
 
     input: {
@@ -446,40 +440,51 @@ const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: "#fff",
-        borderRadius: 25,
+        borderRadius: 15,
         paddingLeft: 20,
         paddingRight: 20,
-        fontSize: 16
+        fontSize: 16,
+        borderWidth: 2,
+        borderColor: "#F4F4F4"
     },
 
     bigTextInput: {
         backgroundColor: "#fff",
-        borderRadius: 25,
+        borderRadius: 15,
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 15,
-        fontSize: 16
+        fontSize: 16,
+        borderWidth: 2,
+        borderColor: "#F4F4F4"
     },
 
     textButton: {
         color: "#fff",
-        fontSize: 20
+        // fontSize: 20
     },
 
     labelStyle: {
-        color: "#4f4f4f",
-        marginBottom: 5
+        color: "#1E202D",
+        marginBottom: 5,
+        fontWeight:'bold'
     },
 
     button: {
-        flex: 1,
-        alignItems: 'center',
+        height: 40,
+        backgroundColor: "#EE6352",
+        borderRadius: 5,
+        width: "100%",
         justifyContent: 'center',
-        marginBottom: 25,
-        borderRadius: 25,
-        marginHorizontal: 35,
-        height: 45,
-        backgroundColor: "#ff8745",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 0,
+
+        elevation: 8,
     },
     spinnerTextStyle: {
         color: "#FFF"
@@ -497,5 +502,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10
     },
-    constsText: { borderBottomWidth: 1, borderBottomColor: "#fff", marginBottom: 16 }
+    detailText: { 
+        fontSize: 16,
+        color: "#000",
+        textAlign: 'auto',
+        marginBottom: 0,
+        fontStyle:'italic'
+    },
+    constsText: { borderBottomWidth: 1, borderBottomColor: "#fff", marginBottom: 16 },
+
 });
