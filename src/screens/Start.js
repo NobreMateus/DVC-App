@@ -31,9 +31,19 @@ class MainStack extends React.Component {
     render() {
         return (
             <Drawer.Navigator initialRouteName="Home">
-                <Drawer.Screen name="Home" component={Principal} />
-                <Drawer.Screen name="Adicionar DVC" component={DVCForm} />
+                <Drawer.Screen name="Home" component={HomeStack} />
             </Drawer.Navigator>
+        )
+    }
+}
+
+class HomeStack extends React.Component {
+    render() {
+        return (
+            <Stack.Navigator >
+                <Stack.Screen name="Home" component={Principal}  options={{ headerShown: false }} />
+                <Stack.Screen name="Adicionar DVC" component={DVCForm} options={{ headerShown: false }} />
+            </ Stack.Navigator>
         )
     }
 }
